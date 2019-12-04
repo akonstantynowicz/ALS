@@ -1,13 +1,16 @@
 package pl.ug.edu;
 
+import pl.ug.edu.gauss.Gauss;
+import pl.ug.edu.gauss.Macierz;
+import pl.ug.edu.generic.Double;
+
 public class Main {
 
     public static void main(String[] args){
-        Double d = new Double(6.20);
-        System.out.println(d);
+        Gauss gauss = new Gauss();
         Macierz m = new Macierz(5);
         m.drukuj();
-        Gauss gauss = new Gauss();
-        System.out.println(gauss.PG(m.macierz,m.wektor));
+        System.out.println(gauss.PG(m.macierz, m.wektor));
+        m.drukuj();
     }
 }

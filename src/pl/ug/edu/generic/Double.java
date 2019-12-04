@@ -1,44 +1,49 @@
-package pl.ug.edu;
+package pl.ug.edu.generic;
 
-public class Double implements Numeric<Double>{
+public class Double implements Numeric<Double> {
     final private double number;
+
+    public Double(double number) {
+        this.number = number;
+    }
 
     @Override
     public String toString() {
         return String.format("%9.5f", number);
     }
 
-    public Double(double number) {
-        this.number = number;
-    }
-
-    static Double of(double d) {
+    public static Double valueOf(double d) {
         return new Double(d);
     }
 
     @Override
     public Double add(Double other) {
-        return Double.of(this.number + other.number);
+        return Double.valueOf(this.number + other.number);
     }
 
     @Override
     public Double subtract(Double other) {
-        return Double.of(this.number - other.number);
+        return Double.valueOf(this.number - other.number);
     }
 
     @Override
     public Double multiply(Double other) {
-        return Double.of(this.number * other.number);
+        return Double.valueOf(this.number * other.number);
     }
 
     @Override
     public Double divide(Double other) {
-        return Double.of(this.number / other.number);
+        return Double.valueOf(this.number / other.number);
     }
 
     @Override
     public Double abs() {
-        return Double.of(Math.abs(this.number));
+        return Double.valueOf(Math.abs(this.number));
+    }
+
+    @Override
+    public Double getZero() {
+        return Double.valueOf(0);
     }
 
     @Override

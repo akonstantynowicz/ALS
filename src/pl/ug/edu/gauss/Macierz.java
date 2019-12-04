@@ -1,6 +1,7 @@
-package pl.ug.edu;
+package pl.ug.edu.gauss;
 
-import java.util.Arrays;
+import pl.ug.edu.generic.Double;
+
 import java.util.Random;
 
 public class Macierz {
@@ -10,8 +11,8 @@ public class Macierz {
     public Double[] wektor;
 
     public void drukuj() {
-        for (int i=0; i<N; i++){
-            for (int j=0;j<N;j++){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
                 System.out.print(macierz[i][j] + " *" + wektorX[j]);
             }
             System.out.print(" | " + wektor[i] + "\n");
@@ -37,7 +38,7 @@ public class Macierz {
 
     public void zerujWektor() {
         for (int i = 0; i < N; i++) {
-            wektor[i] = Double.of(0);
+            wektor[i] = Double.valueOf(0);
         }
     }
 
@@ -46,7 +47,7 @@ public class Macierz {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 r = losujR();
-                macierz[i][j] = Double.of(r).divide(Double.of(65536));
+                macierz[i][j] = Double.valueOf(r).divide(Double.valueOf(65536));
             }
         }
     }
@@ -55,7 +56,7 @@ public class Macierz {
         int r;
         for (int i = 0; i < N; i++) {
             r = losujR();
-            wektorX[i] = Double.of(r).divide(Double.of(65536));
+            wektorX[i] = Double.valueOf(r).divide(Double.valueOf(65536));
         }
     }
 
