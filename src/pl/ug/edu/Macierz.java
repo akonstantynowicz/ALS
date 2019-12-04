@@ -1,3 +1,5 @@
+package pl.ug.edu;
+
 import java.util.Arrays;
 import java.util.Random;
 

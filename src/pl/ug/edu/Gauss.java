@@ -1,3 +1,5 @@
+package pl.ug.edu;
+
 public class Gauss <T extends Numeric<T>>{
     static int N=5;
     GenericMath<T> gm = new GenericMath<>();

@@ -1,3 +1,4 @@
+package pl.ug.edu;
 
 public class Double implements Numeric<Double>{
     final private double number;
