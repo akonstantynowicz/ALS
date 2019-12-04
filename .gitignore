@@ -13,6 +13,7 @@
 #intelliJ
 .idea/
 ALS.iml
+out
 
 # Package Files #
 *.jar
