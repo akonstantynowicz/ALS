@@ -49,8 +49,8 @@ public class Gauss<T extends Numeric<T>> {
     }
 
     public List<T> dajWynik(T[][] A, T[] B) {
-        List<T> wynik = initList(N, A[0][0].getZero());
-        List<T> tmp = initList(N - 1, A[0][0].getZero());
+        List<T> wynik = initList(N, B[0].getZero());
+        List<T> tmp = initList(N - 1, B[0].getZero());
         for (int i = N - 1; i >= 0; i--) {
             for (int j = N - 1; j > i; j--) {
                 tmp.set(j - 1, A[i][j].multiply(wynik.get(j)));
