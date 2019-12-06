@@ -33,7 +33,7 @@ public class Parser {
             inputStream = new FileInputStream(path);
             sc = new Scanner(inputStream, "UTF-8");
             Review review = new Review();
-            int currentProductId = null;
+            int currentProductId = -1;
             String currentCategory = null;
 
             while (sc.hasNextLine()) {
