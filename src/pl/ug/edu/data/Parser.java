@@ -17,7 +17,7 @@ public class Parser {
     private Pattern categoryLinePattern = Pattern.compile("group:.*");
 
     private Pattern numberPattern = Pattern.compile("\\s\\d+");
-    private Pattern categoryPatternt = Pattern.compile("\\s([A-Z]|[a-z])+$");
+    private Pattern categoryPattern = Pattern.compile("\\s([A-Z]|[a-z])+$");
     private Pattern userIdPattern = Pattern.compile("([A-Z]|[0-9])+");
 
 
@@ -33,7 +33,7 @@ public class Parser {
             inputStream = new FileInputStream(path);
             sc = new Scanner(inputStream, "UTF-8");
             Review review = new Review();
-            String currentProductId = null;
+            int currentProductId = null;
             String currentCategory = null;
 
             while (sc.hasNextLine()) {
@@ -42,17 +42,17 @@ public class Parser {
                 //productId
 
                 String productIdLine = extractPatternValue(line, idProductLinePattern);
-                if (productIdLine != null ) {
+                if (productIdLine != null) {
                     String productId = extractPatternValue(productIdLine, numberPattern);
                     if (productId != null) {
-                        currentProductId = productId.trim();
-                        review.setProductId(Integer.parseInt(currentProductId));
+                        currentProductId = Integer.parseInt(productId.trim());
+                        review.setProductId(currentProductId);
                     }
                 }
 
                 String categoryLine = extractPatternValue(line, categoryLinePattern);
-                if (categoryLine != null ) {
-                    String category = extractPatternValue(categoryLine, categoryPatternt);
+                if (categoryLine != null) {
+                    String category = extractPatternValue(categoryLine, categoryPattern);
                     if (category != null) {
                         currentCategory = category.trim();
                         review.setCategory(currentCategory);
@@ -70,7 +70,7 @@ public class Parser {
                         review.setRating(Integer.parseInt(rating.trim()));
                         reviewList.add(review);
                         review = new Review();
-                        review.setProductId(Integer.parseInt(currentProductId));
+                        review.setProductId(currentProductId);
                         review.setCategory(currentCategory);
                     }
                 }
@@ -79,7 +79,7 @@ public class Parser {
             if (sc.ioException() != null) {
                 throw sc.ioException();
             }
-        } finally{
+        } finally {
 
             if (inputStream != null) {
                 inputStream.close();
@@ -94,8 +94,8 @@ public class Parser {
 
     private String extractPatternValue(String line, Pattern p) {
         m = p.matcher(line);
-        if(m.find()) {
-           return (m.group());
+        if (m.find()) {
+            return (m.group());
         }
         return null;
     }
