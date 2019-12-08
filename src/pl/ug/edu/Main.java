@@ -18,7 +18,7 @@ public class Main {
         Parser p = new Parser();
 
         try {
-            List<Review> list = p.readData("sample.txt");
+            List<Review> list = p.readData("sample2.txt");
 
             for (Review r : list) {
                 System.out.println(r);
