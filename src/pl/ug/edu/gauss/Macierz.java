@@ -5,13 +5,14 @@ import pl.ug.edu.generic.Double;
 import java.util.Random;
 
 public class Macierz {
-    public int N;
+    static int M;
+    static int N;
     public Double[][] macierz;
     public Double[] wektorX;
     public Double[] wektor;
 
-    public void drukuj() {
-        for (int i = 0; i < N; i++) {
+    public void drukujWszystko() {
+        for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
                 System.out.print(macierz[i][j] + " *" + wektorX[j]);
             }
@@ -19,11 +20,27 @@ public class Macierz {
         }
     }
 
-    public Macierz(int N) {
+    public void drukuj(){
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.print(macierz[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
+    public Macierz(int M,int N) {
+        this.M = M;
         this.N = N;
-        macierz = new Double[N][N];
-        wektorX = new Double[N];
-        wektor = new Double[N];
+        int size;
+        if(M>N){
+            size = M;
+        }else {
+            size = N;
+        }
+        macierz = new Double[size][size];
+        wektorX = new Double[size];
+        wektor = new Double[size];
 
         losujMacierz();
         losujWektorX();
@@ -44,7 +61,7 @@ public class Macierz {
 
     public void losujMacierz() {
         int r;
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
                 r = losujR();
                 macierz[i][j] = Double.valueOf(r).divide(Double.valueOf(65536));
@@ -54,7 +71,7 @@ public class Macierz {
 
     public void losujWektorX() {
         int r;
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < M; i++) {
             r = losujR();
             wektorX[i] = Double.valueOf(r).divide(Double.valueOf(65536));
         }
@@ -62,10 +79,25 @@ public class Macierz {
 
     public void obliczWektor() {
         zerujWektor();
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
                 wektor[i] = wektor[i].add(macierz[i][j].multiply(wektorX[j]));
             }
         }
     }
+
+    public void transponujMacierz(){
+        int size = macierz.length;
+        Double[][] macierz_transponowana = new Double[size][size];
+        for (int i=0;i<M;i++){
+            for (int j=0; j<N;j++){
+                macierz_transponowana[j][i]=macierz[i][j];
+            }
+        }
+        size=N;
+        this.N=M;
+        this.M=size;
+        this.macierz = macierz_transponowana;
+    }
+
 }

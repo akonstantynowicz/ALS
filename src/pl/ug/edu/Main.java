@@ -11,11 +11,19 @@ import pl.ug.edu.data.Review;
 public class Main {
 
     public static void main(String[] args){
-//        Gauss gauss = new Gauss();
-//        Macierz m = new Macierz(5);
-//        m.drukuj();
-//        System.out.println(gauss.PG(m.macierz, m.wektor));
-//        m.drukuj();
+       /* Gauss gauss = new Gauss();
+        Macierz m = new Macierz(5,5);
+        m.drukuj();
+        m.transponujMacierz();
+        m.obliczWektor();
+        System.out.println();
+        m.drukuj();
+        System.out.println(gauss.PG(m.macierz, m.wektor));
+        for (int i=0;i<5;i++){
+            System.out.print(m.wektorX[i] + " ");
+        }
+        System.out.println("\n");
+        m.drukuj();*/
 
       Matrix matrix = new Matrix();
         Parser p = new Parser();
