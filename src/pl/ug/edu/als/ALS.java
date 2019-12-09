@@ -10,6 +10,7 @@ import com.sun.javafx.tk.quantum.MasterTimer;
 import pl.ug.edu.data.DataUtil;
 import pl.ug.edu.data.Review;
 import pl.ug.edu.gauss.Matrix;
+import pl.ug.edu.generic.Double;
 
 public class ALS {
 
@@ -63,11 +64,22 @@ public class ALS {
                     i++;
                 }
             }
-            PIU.transpose();
+
+            Matrix PIUT = PIU.transpose();
+            System.out.println("PIU");
             PIU.print();
+            System.out.println("PIUT");
+            PIUT.print();
 
             Matrix E = new Matrix(d, d);
             E.generateUnitMatrix();
+            E.multiply(Double.valueOf(lambda));
+
+            Matrix AU = PIU.multiply(PIUT).add(E);
+            System.out.println("AU");
+            AU.print();
+
+
         }
     }
 

@@ -92,32 +92,48 @@ public class Matrix {
         }
     }
 
-    public void transpose() {
-        int temp = N;
-        this.N = M;
-        this.M = temp;
+    public Matrix transpose() {
 
-        Double[][] transposedMatrix = new Double[M][N];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                transposedMatrix[j][i] = matrix[i][j];
+
+        Matrix transposedMatrix = new Matrix(N,M);
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                transposedMatrix.matrix[j][i] = matrix[i][j];
             }
         }
 
-        this.matrix = transposedMatrix;
+        return transposedMatrix;
     }
 
     public Matrix multiply(Matrix m) {
-        Matrix multiplied = new Matrix(this.M,m.N);
-        for (int i=0;i<multiplied.M;i++){
-            for(int j=0;j<multiplied.N;j++){
-                multiplied.matrix[i][j]=Double.valueOf(0);
+        Matrix product = new Matrix(this.M,m.N);
+        for (int i=0;i<product.M;i++){
+            for(int j=0;j<product.N;j++){
+                product.matrix[i][j]=Double.valueOf(0);
                 for (int k=0;k<m.M;k++){
-                    multiplied.matrix[i][j] = multiplied.matrix[i][j].add(this.matrix[i][k].multiply(m.matrix[k][j]));
+                    product.matrix[i][j] = product.matrix[i][j].add(this.matrix[i][k].multiply(m.matrix[k][j]));
                 }
             }
         }
-        return multiplied;
+        return product;
+    }
+
+    public void multiply(Double number){
+        for (int i=0;i<this.M;i++){
+            for (int j=0;j<this.N;j++){
+                this.matrix[i][j] = this.matrix[i][j].multiply(number);
+            }
+        }
+    }
+
+    public Matrix add(Matrix m) {
+        Matrix sum = new Matrix(this.M,this.N);
+        for(int i=0;i<sum.M;i++){
+            for (int j=0;j<sum.N;j++){
+                sum.matrix[i][j] = this.matrix[i][j].add(m.matrix[i][j]);
+            }
+        }
+        return sum;
     }
 
 }
