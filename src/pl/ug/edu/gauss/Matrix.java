@@ -3,21 +3,23 @@ package pl.ug.edu.gauss;
 import pl.ug.edu.generic.Double;
 
 import javax.crypto.Mac;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Matrix {
     public int M;
     public int N;
     public Double[][] matrix;
-    public Double[] wektorX;
-    public Double[] wektor;
+    public Double[] vectorX;
+    public Double[] vector;
 
     public void drukujWszystko() {
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
-                System.out.print(matrix[i][j] + " *" + wektorX[j]);
+                System.out.print(matrix[i][j] + " *" + vectorX[j]);
             }
-            System.out.print(" | " + wektor[i] + "\n");
+            System.out.print(" | " + vector[i] + "\n");
         }
     }
 
@@ -34,8 +36,8 @@ public class Matrix {
         this.M = M;
         this.N = N;
         matrix = new Double[M][N];
-//        wektorX = new Double[size];
-//        wektor = new Double[size];
+//        vectorX = new Double[size];
+        vector = new Double[M];
 
 //        getRandomMatrix();
 //        losujWektorX();
@@ -50,7 +52,7 @@ public class Matrix {
 
     private void zerujWektor() {
         for (int i = 0; i < N; i++) {
-            wektor[i] = Double.valueOf(0);
+            vector[i] = Double.valueOf(0);
         }
     }
 
@@ -79,15 +81,15 @@ public class Matrix {
         int r;
         for (int i = 0; i < M; i++) {
             r = losujR();
-            wektorX[i] = Double.valueOf(r).divide(Double.valueOf(65536));
+            vectorX[i] = Double.valueOf(r).divide(Double.valueOf(65536));
         }
     }
 
-    private void obliczWektor() {
-        zerujWektor();
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) {
-                wektor[i] = wektor[i].add(matrix[i][j].multiply(wektorX[j]));
+    public void calculateVector(List<Integer> userRatings, ArrayList<Integer> ratedProductIds, Matrix P){
+        for (int i=0;i<M;i++){
+            vector[i]=Double.valueOf(0);
+            for (int id : ratedProductIds) {
+                vector[i] = vector[i].add(Double.valueOf(userRatings.get(id)).multiply(P.matrix[i][id]));
             }
         }
     }
@@ -134,6 +136,12 @@ public class Matrix {
             }
         }
         return sum;
+    }
+
+    public void swapWithSolution(List<Double> solution, int columnIndex){
+        for(int i=0;i<M;i++){
+            matrix[i][columnIndex]=solution.get(i);
+        }
     }
 
 }
