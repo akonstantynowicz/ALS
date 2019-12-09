@@ -2,6 +2,7 @@ package pl.ug.edu.gauss;
 
 import pl.ug.edu.generic.Double;
 
+import javax.crypto.Mac;
 import java.util.Random;
 
 public class Matrix {
@@ -104,6 +105,19 @@ public class Matrix {
         }
 
         this.matrix = transposedMatrix;
+    }
+
+    public Matrix multiply(Matrix m) {
+        Matrix multiplied = new Matrix(this.M,m.N);
+        for (int i=0;i<multiplied.M;i++){
+            for(int j=0;j<multiplied.N;j++){
+                multiplied.matrix[i][j]=Double.valueOf(0);
+                for (int k=0;k<m.M;k++){
+                    multiplied.matrix[i][j] = multiplied.matrix[i][j].add(this.matrix[i][k].multiply(m.matrix[k][j]));
+                }
+            }
+        }
+        return multiplied;
     }
 
 }
