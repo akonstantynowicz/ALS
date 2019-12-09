@@ -1,5 +1,6 @@
 package pl.ug.edu.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataUtil {
@@ -11,5 +12,17 @@ public class DataUtil {
             }
         }
         return highestId + 1;
+    }
+
+    public static ArrayList<Integer> getRatedProductsIds(List<Integer> userRatings) {
+        ArrayList<Integer> ratedProductIds = new ArrayList<Integer>();
+        int productId = 0;
+        for (int rating : userRatings) {
+            if (rating != 0) {
+                ratedProductIds.add(productId);
+            }
+            productId++;
+        }
+        return ratedProductIds;
     }
 }

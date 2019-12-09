@@ -5,8 +5,8 @@ import pl.ug.edu.generic.Double;
 import java.util.Random;
 
 public class Matrix {
-    private int M;
-    private int N;
+    public int M;
+    public int N;
     public Double[][] matrix;
     public Double[] wektorX;
     public Double[] wektor;
@@ -36,7 +36,7 @@ public class Matrix {
 //        wektorX = new Double[size];
 //        wektor = new Double[size];
 
-        getRandomMatrix();
+//        getRandomMatrix();
 //        losujWektorX();
 //        obliczWektor();
     }
@@ -53,10 +53,23 @@ public class Matrix {
         }
     }
 
-    private void getRandomMatrix() {
+    public void generateRandomMatrix() {
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
                 matrix[i][j] = Double.valueOf(Math.random());
+            }
+        }
+    }
+
+    public void generateUnitMatrix() {
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                if (i == j) {
+                    matrix[i][j] = Double.valueOf(1);
+                }
+                else {
+                    matrix[i][j] = Double.valueOf(0);
+                }
             }
         }
     }

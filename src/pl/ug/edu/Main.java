@@ -25,6 +25,8 @@ public class Main {
 
             als.generatePMatrix();
             als.generateUMatrix();
+            System.out.println("PIU");
+            als.alsAlg();
         } catch (IOException e) {
             e.printStackTrace();
         }
