@@ -5,62 +5,58 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
 import pl.ug.edu.data.Review;
+import pl.ug.edu.gauss.Matrix;
 
 public class ALS {
 
-  private static final int PRODUCTS_AMOUNT = 548552;
+    private int productsAmount = 0;
 
-  private Map<String, Integer> userList;
+    private Map<String, Integer> userList;
 
-  private List<List<Integer>> userRatingsList;
+    private List<List<Integer>> userRatingsList;
 
-  private int d;
+    private int d;
 
-  private double lambda;
+    private double lambda;
 
-  private double[][] p;
+    private Matrix p;
 
-  private double[][] u;
+    private Matrix u;
 
-  public ALS(int d, double lambda) {
-    this.d = d;
-    this.lambda = lambda;
-    userList = new TreeMap<>();
-    userRatingsList = new ArrayList<>();
-  }
-
-  public void addReview(Review review) {
-    if (!userList.containsKey(review.getUserId())) {
-      System.out.println("Dodawanie nowego usera do listy");
-      userList.put(review.getUserId(), userRatingsList.size());
-      userRatingsList.add(new ArrayList<>(Collections.nCopies(PRODUCTS_AMOUNT, 0)));
-    } else {
-      System.out.println("User już istnieje");
+    public ALS(int d, double lambda, int productsAmount) {
+        this.d = d;
+        this.lambda = lambda;
+        this.productsAmount = productsAmount;
+        userList = new TreeMap<>();
+        userRatingsList = new ArrayList<>();
     }
-    if (userList.containsKey(review.getUserId())) {
-      userRatingsList.get(userList.get(review.getUserId()))
-          .set(review.getProductId(), review.getRating());
-    }
-  }
 
-  public void generatePMatrix() {
-    p = new double[d][PRODUCTS_AMOUNT];
-    for (int i = 0; i < d; i++) {
-      for (int j = 0; j < PRODUCTS_AMOUNT; j++) {
-        p[i][j] = Math.random();
-        // System.out.println(p[i][j]);
-      }
+    public void addReview(Review review) {
+        if (!userList.containsKey(review.getUserId())) {
+            System.out.println("Dodawanie nowego usera do listy");
+            userList.put(review.getUserId(), userRatingsList.size());
+            userRatingsList.add(new ArrayList<>(Collections.nCopies(productsAmount, 0)));
+        } else {
+            System.out.println("User już istnieje");
+        }
+        if (userList.containsKey(review.getUserId())) {
+            userRatingsList.get(userList.get(review.getUserId()))
+                    .set(review.getProductId(), review.getRating());
+        }
     }
-  }
 
-  public void generateUMatrix() {
-    u = new double[d][userList.size()];
-    for (int i = 0; i < d; i++) {
-      for (int j = 0; j < userList.size(); j++) {
-        u[i][j] = Math.random();
-        // System.out.println(p[i][j]);
-      }
+    public void generatePMatrix() {
+        System.out.println("Generuje P");
+        p = new Matrix(d, productsAmount);
+        p.print();
     }
-  }
+
+    public void generateUMatrix() {
+        System.out.println("Generuje U");
+        u = new Matrix(d, userList.size());
+        u.print();
+    }
+
 }

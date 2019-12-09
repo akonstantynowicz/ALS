@@ -20,8 +20,6 @@ public class Parser {
     private Pattern categoryPattern = Pattern.compile("\\s([A-Z]|[a-z])+$");
     private Pattern userIdPattern = Pattern.compile("([A-Z]|[0-9])+");
 
-
-    //
     public List<Review> readData(String path) throws IOException {
         FileInputStream inputStream = null;
         Scanner sc = null;
@@ -49,12 +47,12 @@ public class Parser {
 
                 if ((productIdLine = extractPatternValue(line, idProductLinePattern)) != null
                         && (productId = extractPatternValue(productIdLine, numberPattern)) != null) {
-                        currentProductId = Integer.parseInt(productId.trim());
-                        review.setProductId(currentProductId);
+                    currentProductId = Integer.parseInt(productId.trim());
+                    review.setProductId(currentProductId);
                 } else if ((categoryLine = extractPatternValue(line, categoryLinePattern)) != null
                         && (category = extractPatternValue(categoryLine, categoryPattern)) != null) {
-                        currentCategory = category.trim();
-                        review.setCategory(currentCategory);
+                    currentCategory = category.trim();
+                    review.setCategory(currentCategory);
                 } else if ((reviewLine = extractPatternValue(line, reviewLinePattern)) != null) {
                     if ((userId = extractPatternValue(reviewLine, userIdPattern)) != null) {
                         review.setUserId(userId);
@@ -62,7 +60,6 @@ public class Parser {
                     if ((rating = extractPatternValue(reviewLine, numberPattern)) != null) {
                         review.setRating(Integer.parseInt(rating.trim()));
                         reviewList.add(review);
-
                         review = new Review();
                         review.setProductId(currentProductId);
                         review.setCategory(currentCategory);
@@ -80,7 +77,6 @@ public class Parser {
                 sc.close();
             }
         }
-
         return reviewList;
     }
 
@@ -91,6 +87,4 @@ public class Parser {
         }
         return null;
     }
-
-
 }
