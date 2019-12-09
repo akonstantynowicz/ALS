@@ -9,7 +9,9 @@ import java.util.TreeMap;
 import com.sun.javafx.tk.quantum.MasterTimer;
 import pl.ug.edu.data.DataUtil;
 import pl.ug.edu.data.Review;
+import pl.ug.edu.gauss.Gauss;
 import pl.ug.edu.gauss.Matrix;
+import pl.ug.edu.generic.Double;
 
 public class ALS {
 
@@ -63,12 +65,21 @@ public class ALS {
                     i++;
                 }
             }
-            PIU.transpose();
-            PIU.print();
+
+            Matrix PIUT = PIU.transpose();
 
             Matrix E = new Matrix(d, d);
             E.generateUnitMatrix();
+            E.multiply(Double.valueOf(lambda));
+
+            Matrix AU = PIU.multiply(PIUT).add(E);
+            AU.calculateVector(userRatings, ratedProductIds,p);
+            Gauss gauss = new Gauss(AU.M,AU.N);
+
+            u.swapWithSolution(gauss.PG(AU.matrix,AU.vector),userRatingsList.indexOf(userRatings));
+
         }
+        u.print();
     }
 
 

@@ -10,7 +10,7 @@ public class Gauss<T extends Numeric<T>> {
     static int M = 5;
     static int N = 5;
 
-    public Gauss(int N, int M) {
+    public Gauss(int M, int N) {
         this.M= M;
         this.N=N;
 
