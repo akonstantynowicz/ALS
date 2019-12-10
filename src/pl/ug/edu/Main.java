@@ -2,12 +2,10 @@ package pl.ug.edu;
 
 import java.io.IOException;
 import java.util.List;
-
 import pl.ug.edu.als.ALS;
 import pl.ug.edu.data.DataUtil;
 import pl.ug.edu.data.Parser;
 import pl.ug.edu.data.Review;
-import pl.ug.edu.gauss.Matrix;
 
 public class Main {
 
@@ -22,7 +20,6 @@ public class Main {
                 System.out.println(r);
                 als.addReview(r);
             }
-
             als.generatePMatrix();
             als.generateUMatrix();
             System.out.println("PIU");
