@@ -57,6 +57,7 @@ public class ALS {
   }
 
   public void alg() {
+  int userIndex=0;
     for (List<Integer> userRatings : userRatingsList) {
       ArrayList<Integer> ratedProductIds = DataUtil.getRatedProductsIds(userRatings);
       Matrix PIU = new Matrix(d, ratedProductIds.size());
@@ -77,9 +78,35 @@ public class ALS {
       Matrix AU = PIU.multiply(PIUT).add(E);
       AU.calculateVector(userRatings, ratedProductIds, p);
       Gauss gauss = new Gauss(AU.M, AU.N);
-      u.swapWithSolution(gauss.PG(AU.matrix, AU.vector), userRatingsList.indexOf(userRatings));
+      u.swapWithSolution(gauss.PG(AU.matrix, AU.vector), userIndex);
+      userIndex++;
     }
     u.print();
+    for (int i=0;i<productsAmount;i++){
+      ArrayList<Integer> ratingUsersIds = DataUtil.getRatingUserIds(userRatingsList,i);
+      ArrayList<Integer> productRatings = DataUtil.getProductRatings(userRatingsList,i);
+      Matrix UIP = new Matrix(d, ratingUsersIds.size());
+      for (int m = 0; m < d; m++) {
+        int j = 0;
+        for (int id: ratingUsersIds) {
+          UIP.matrix[m][j] = u.matrix[m][id];
+          j++;
+        }
+      }
+
+      Matrix UIPT = UIP.transpose();
+
+      Matrix E = new Matrix(d, d);
+      E.generateUnitMatrix();
+      E.multiply(Double.valueOf(lambda));
+
+      Matrix BU = UIP.multiply(UIPT).add(E);
+      BU.calculateVector(productRatings, ratingUsersIds,u,i);
+      Gauss gauss = new Gauss(BU.M,BU.N);
+
+      p.swapWithSolution(gauss.PG(BU.matrix,BU.vector),i);
+    }
+    p.print();
   }
 
   public void generatePMatrix() {

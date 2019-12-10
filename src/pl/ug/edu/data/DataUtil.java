@@ -25,4 +25,22 @@ public class DataUtil {
         }
         return ratedProductIds;
     }
+
+    public static ArrayList<Integer> getRatingUserIds(List<List<Integer>> userRatingsList, int p) {
+        ArrayList<Integer> ratingUsersIds = new ArrayList<Integer>();
+        for (List<Integer> userRaiting : userRatingsList) {
+            if (userRaiting.get(p) != 0) {
+                ratingUsersIds.add(userRatingsList.indexOf(userRaiting));
+            }
+        }
+        return ratingUsersIds;
+    }
+
+    public static  ArrayList<Integer> getProductRatings(List<List<Integer>> userRatingsList,int p){
+        ArrayList<Integer> productRatings = new ArrayList<>();
+        for (List<Integer> userRating : userRatingsList) {
+            productRatings.add(userRatingsList.get(userRatingsList.indexOf(userRating)).get(p));
+        }
+        return productRatings;
+    }
 }
