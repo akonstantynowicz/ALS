@@ -104,8 +104,6 @@ public class Matrix {
     }
 
     public Matrix transpose() {
-
-
         Matrix transposedMatrix = new Matrix(N,M);
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {

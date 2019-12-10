@@ -2,6 +2,7 @@ package pl.ug.edu;
 
 import java.io.IOException;
 import java.util.List;
+
 import pl.ug.edu.als.ALS;
 import pl.ug.edu.data.DataUtil;
 import pl.ug.edu.data.Parser;
@@ -15,7 +16,7 @@ public class Main {
         try {
             List<Review> list = parser.readData("sample.txt");
             System.out.println(DataUtil.getHighestProductId(list));
-            ALS als = new ALS(3, 0.1, DataUtil.getHighestProductId(list));
+            ALS als = new ALS(3, 0.1, DataUtil.getHighestProductId(list) + 1);
             for (Review r : list) {
                 System.out.println(r);
                 als.addReview(r);
@@ -23,7 +24,7 @@ public class Main {
             als.generatePMatrix();
             als.generateUMatrix();
             System.out.println("PIU");
-            als.alsAlg();
+            als.alg();
         } catch (IOException e) {
             e.printStackTrace();
         }

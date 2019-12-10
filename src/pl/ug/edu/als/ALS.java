@@ -41,6 +41,7 @@ public class ALS {
         .set(review.getProductId(), review.getRating());
   }
 
+
   private void addUserIfNotInList(String userId) {
     if (userList.containsKey(userId)) {
       System.out.println("User już istnieje");
@@ -55,8 +56,8 @@ public class ALS {
     userRatingsList.add(new ArrayList<>(Collections.nCopies(productsAmount, 0)));
   }
 
-  public void alsAlg() {
-    int userIndex=0;
+  public void alg() {
+  int userIndex=0;
     for (List<Integer> userRatings : userRatingsList) {
       ArrayList<Integer> ratedProductIds = DataUtil.getRatedProductsIds(userRatings);
       Matrix PIU = new Matrix(d, ratedProductIds.size());
