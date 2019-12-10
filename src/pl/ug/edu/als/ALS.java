@@ -56,7 +56,7 @@ public class ALS {
     userRatingsList.add(new ArrayList<>(Collections.nCopies(productsAmount, 0)));
   }
 
-  public void alsAlg() {
+  public void alg() {
     for (List<Integer> userRatings : userRatingsList) {
       ArrayList<Integer> ratedProductIds = DataUtil.getRatedProductsIds(userRatings);
       Matrix PIU = new Matrix(d, ratedProductIds.size());

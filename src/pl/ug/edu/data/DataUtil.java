@@ -11,7 +11,7 @@ public class DataUtil {
                 highestId = r.getProductId();
             }
         }
-        return highestId + 1;
+        return highestId;
     }
 
     public static ArrayList<Integer> getRatedProductsIds(List<Integer> userRatings) {
