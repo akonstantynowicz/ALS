@@ -56,6 +56,7 @@ public class ALS {
   }
 
   public void alsAlg() {
+    int userIndex=0;
     for (List<Integer> userRatings : userRatingsList) {
       ArrayList<Integer> ratedProductIds = DataUtil.getRatedProductsIds(userRatings);
       Matrix PIU = new Matrix(d, ratedProductIds.size());
@@ -76,7 +77,8 @@ public class ALS {
       Matrix AU = PIU.multiply(PIUT).add(E);
       AU.calculateVector(userRatings, ratedProductIds, p);
       Gauss gauss = new Gauss(AU.M, AU.N);
-      u.swapWithSolution(gauss.PG(AU.matrix, AU.vector), userRatingsList.indexOf(userRatings));
+      u.swapWithSolution(gauss.PG(AU.matrix, AU.vector), userIndex);
+      userIndex++;
     }
     u.print();
     for (int i=0;i<productsAmount;i++){
