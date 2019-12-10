@@ -21,9 +21,8 @@ public class Main {
                 System.out.println(r);
                 als.addReview(r);
             }
-            als.generatePMatrix();
-            als.generateUMatrix();
-            System.out.println("PIU");
+            als.generateRandomPMatrix();
+            als.generateRandomUMatrix();
             als.alg();
         } catch (IOException e) {
             e.printStackTrace();
