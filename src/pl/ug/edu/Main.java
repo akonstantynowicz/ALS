@@ -7,7 +7,6 @@ import pl.ug.edu.als.ALS;
 import pl.ug.edu.data.DataUtil;
 import pl.ug.edu.data.Parser;
 import pl.ug.edu.data.Review;
-import pl.ug.edu.gauss.Matrix;
 
 public class Main {
 
@@ -26,7 +25,7 @@ public class Main {
             als.generatePMatrix();
             als.generateUMatrix();
             System.out.println("PIU");
-            als.alsAlg();
+            als.alg();
         } catch (IOException e) {
             e.printStackTrace();
         }

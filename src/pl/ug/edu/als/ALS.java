@@ -49,7 +49,7 @@ public class ALS {
         }
     }
 
-    public void alsAlg() {
+    public void alg() {
         for (List<Integer> userRatings : userRatingsList) {
             ArrayList<Integer> ratedProductIds = DataUtil.getRatedProductsIds(userRatings);
             Matrix PIU = new Matrix(d, ratedProductIds.size());
