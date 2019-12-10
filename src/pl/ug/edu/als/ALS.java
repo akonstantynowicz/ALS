@@ -79,6 +79,31 @@ public class ALS {
       u.swapWithSolution(gauss.PG(AU.matrix, AU.vector), userRatingsList.indexOf(userRatings));
     }
     u.print();
+    for (int i=0;i<productsAmount;i++){
+      ArrayList<Integer> ratingUsersIds = DataUtil.getRatingUserIds(userRatingsList,i);
+      ArrayList<Integer> productRatings = DataUtil.getProductRatings(userRatingsList,i);
+      Matrix UIP = new Matrix(d, ratingUsersIds.size());
+      for (int m = 0; m < d; m++) {
+        int j = 0;
+        for (int id: ratingUsersIds) {
+          UIP.matrix[m][j] = u.matrix[m][id];
+          j++;
+        }
+      }
+
+      Matrix UIPT = UIP.transpose();
+
+      Matrix E = new Matrix(d, d);
+      E.generateUnitMatrix();
+      E.multiply(Double.valueOf(lambda));
+
+      Matrix BU = UIP.multiply(UIPT).add(E);
+      BU.calculateVector(productRatings, ratingUsersIds,u,i);
+      Gauss gauss = new Gauss(BU.M,BU.N);
+
+      p.swapWithSolution(gauss.PG(BU.matrix,BU.vector),i);
+    }
+    p.print();
   }
 
   public void generatePMatrix() {

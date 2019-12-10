@@ -94,6 +94,15 @@ public class Matrix {
         }
     }
 
+    public void calculateVector(List<Integer> productRatings, ArrayList<Integer> raitingUsersIds, Matrix U,int p){
+        for (int i=0;i<M;i++){
+            vector[i]=Double.valueOf(0);
+            for (int id : raitingUsersIds) {
+                vector[i] = vector[i].add(Double.valueOf(productRatings.get(id)).multiply(U.matrix[i][id]));
+            }
+        }
+    }
+
     public Matrix transpose() {
 
 
