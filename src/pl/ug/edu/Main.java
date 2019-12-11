@@ -10,21 +10,24 @@ import pl.ug.edu.data.Review;
 public class Main {
 
   public static void main(String[] args) {
-
-    Parser parser = new Parser();
     try {
-      List<Review> list = parser.readData("sample.txt");
-      System.out.println(DataUtil.getHighestProductId(list));
-      ALS als = new ALS(3, 0.1, DataUtil.getHighestProductId(list) + 1);
-      for (Review r : list) {
-        System.out.println(r);
-        als.addReview(r);
-      }
-      als.generateRandomPMatrix();
-      als.generateRandomUMatrix();
-      als.alg();
+      runAlsAlgorithm();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  private static void runAlsAlgorithm() throws IOException {
+    Parser parser = new Parser();
+    List<Review> list = parser.readData("sample.txt");
+    System.out.println(DataUtil.getHighestProductId(list));
+    ALS als = new ALS(3, 0.1, DataUtil.getHighestProductId(list) + 1);
+    for (Review r : list) {
+      System.out.println(r);
+      als.addReview(r);
+    }
+    als.generateRandomPMatrix();
+    als.generateRandomUMatrix();
+    als.alg();
   }
 }
