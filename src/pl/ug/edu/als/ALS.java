@@ -1,3 +1,8 @@
+/*******************************************************************************
+ *  Copyright (C) 2019 Anna Konstantynowicz, Marcin Szczepaniak, Jakub Ściślewski
+ *  All rights reserved
+ ******************************************************************************/
+
 package pl.ug.edu.als;
 
 import java.util.ArrayList;
