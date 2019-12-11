@@ -2,6 +2,7 @@ package pl.ug.edu.data;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,81 +11,76 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    private Matcher m;
+  private static final Pattern idProductLinePattern = Pattern.compile("^Id:.*$");
 
-    private Pattern idProductLinePattern = Pattern.compile("^Id:.*$");
-    private Pattern reviewLinePattern = Pattern.compile("cutomer:.*rating:\\s*[0-9]");
-    private Pattern categoryLinePattern = Pattern.compile("group:.*");
+  private static final Pattern reviewLinePattern = Pattern.compile("cutomer:.*rating:\\s*[0-9]");
 
-    private Pattern numberPattern = Pattern.compile("\\s\\d+");
-    private Pattern categoryPattern = Pattern.compile("\\s([A-Z]|[a-z])+$");
-    private Pattern userIdPattern = Pattern.compile("([A-Z]|[0-9])+");
+  private static final Pattern categoryLinePattern = Pattern.compile("group:.*");
 
-    public List<Review> readData(String path) throws IOException {
-        FileInputStream inputStream = null;
-        Scanner sc = null;
-        List<Review> reviewList = new ArrayList<Review>();
+  private static final Pattern numberPattern = Pattern.compile("\\s\\d+");
 
-        try {
-            inputStream = new FileInputStream(path);
-            sc = new Scanner(inputStream, "UTF-8");
+  private static final Pattern categoryPattern = Pattern.compile("\\s([A-Z]|[a-z])+$");
 
-            Review review = new Review();
+  private static final Pattern userIdPattern = Pattern.compile("([A-Z]|[0-9])+");
 
-            String productIdLine;
-            String categoryLine;
-            String reviewLine;
-            String productId;
-            String category;
-            String userId;
-            String rating;
+  private static String extractPatternValue(String line, Pattern p) {
 
-            int currentProductId = -1;
-            String currentCategory = null;
-
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-
-                if ((productIdLine = extractPatternValue(line, idProductLinePattern)) != null
-                        && (productId = extractPatternValue(productIdLine, numberPattern)) != null) {
-                    currentProductId = Integer.parseInt(productId.trim());
-                    review.setProductId(currentProductId);
-                } else if ((categoryLine = extractPatternValue(line, categoryLinePattern)) != null
-                        && (category = extractPatternValue(categoryLine, categoryPattern)) != null) {
-                    currentCategory = category.trim();
-                    review.setCategory(currentCategory);
-                } else if ((reviewLine = extractPatternValue(line, reviewLinePattern)) != null) {
-                    if ((userId = extractPatternValue(reviewLine, userIdPattern)) != null) {
-                        review.setUserId(userId);
-                    }
-                    if ((rating = extractPatternValue(reviewLine, numberPattern)) != null) {
-                        review.setRating(Integer.parseInt(rating.trim()));
-                        reviewList.add(review);
-                        review = new Review();
-                        review.setProductId(currentProductId);
-                        review.setCategory(currentCategory);
-                    }
-                }
-            }
-            if (sc.ioException() != null) {
-                throw sc.ioException();
-            }
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            if (sc != null) {
-                sc.close();
-            }
-        }
-        return reviewList;
+    Matcher matcher = p.matcher(line);
+    if (matcher.find()) {
+      return (matcher.group());
     }
+    return null;
+  }
 
-    private String extractPatternValue(String line, Pattern p) {
-        m = p.matcher(line);
-        if (m.find()) {
-            return (m.group());
-        }
-        return null;
+  public List<Review> readData(String path) throws IOException {
+
+    List<Review> reviewList = new ArrayList<>();
+
+    try (FileInputStream inputStream = new FileInputStream(path);
+        Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8)) {
+      generateReviewList(reviewList, scanner);
     }
+    return reviewList;
+  }
+
+  private void generateReviewList(List<Review> reviewList, Scanner scanner) {
+    Review review = new Review();
+
+    String productIdLine;
+    String categoryLine;
+    String reviewLine;
+    String productId;
+    String category;
+    String userId;
+    String rating;
+
+    int currentProductId = -1;
+    String currentCategory = null;
+
+    while (scanner.hasNextLine()) {
+
+      String line = scanner.nextLine();
+
+      if ((productIdLine = extractPatternValue(line, idProductLinePattern)) != null
+          && (productId = extractPatternValue(productIdLine, numberPattern)) != null) {
+        currentProductId = Integer.parseInt(productId.trim());
+        review.setProductId(currentProductId);
+      } else if ((categoryLine = extractPatternValue(line, categoryLinePattern)) != null
+          && (category = extractPatternValue(categoryLine, categoryPattern)) != null) {
+        currentCategory = category.trim();
+        review.setCategory(currentCategory);
+      } else if ((reviewLine = extractPatternValue(line, reviewLinePattern)) != null) {
+        if ((userId = extractPatternValue(reviewLine, userIdPattern)) != null) {
+          review.setUserId(userId);
+        }
+        if ((rating = extractPatternValue(reviewLine, numberPattern)) != null) {
+          review.setRating(Integer.parseInt(rating.trim()));
+          reviewList.add(review);
+          review = new Review();
+          review.setProductId(currentProductId);
+          review.setCategory(currentCategory);
+        }
+      }
+    }
+  }
 }

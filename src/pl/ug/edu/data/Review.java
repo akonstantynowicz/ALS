@@ -1,59 +1,56 @@
 package pl.ug.edu.data;
 
 public class Review {
-    private String userId;
-    private int productId;
-    private int rating;
-    private String category;
 
-    public Review() { }
+  private String userId;
 
-    public Review(String userId, int productId, int rating, String category) {
-        this.userId = userId;
-        this.productId = productId;
-        this.rating = rating;
-        this.category = category;
-    }
+  private int productId;
 
-    public String getUserId() {
-        return userId;
-    }
+  private int rating;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+  private String category;
 
-    public int getProductId() {
-        return productId;
-    }
+  Review() { }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
+  public String getUserId() {
+    return userId;
+  }
 
-    public int getRating() {
-        return rating;
-    }
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
+  public int getProductId() {
+    return productId;
+  }
 
-    public String getCategory() {
-        return category;
-    }
+  public void setProductId(int productId) {
+    this.productId = productId;
+  }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+  public int getRating() {
+    return rating;
+  }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "idUser='" + userId + '\'' +
-                ", idProduct='" + productId + '\'' +
-                ", rating=" + rating +
-                ", category='" + category + '\'' +
-                '}';
-    }
+  public void setRating(int rating) {
+    this.rating = rating;
+  }
+
+  public String getCategory() {
+    return category;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
+  }
+
+  @Override
+  public String toString() {
+    return "Review{" +
+        "idUser='" + userId + '\'' +
+        ", idProduct='" + productId + '\'' +
+        ", rating=" + rating +
+        ", category='" + category + '\'' +
+        '}';
+  }
 }

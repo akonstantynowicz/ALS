@@ -1,11 +1,9 @@
 package pl.ug.edu.gauss;
 
-import pl.ug.edu.generic.Double;
-
-import javax.crypto.Mac;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import pl.ug.edu.generic.Double;
 
 public class Matrix {
     public int M;
@@ -94,7 +92,8 @@ public class Matrix {
         }
     }
 
-    public void calculateVector(List<Integer> productRatings, ArrayList<Integer> raitingUsersIds, Matrix U,int p){
+  public void calculateVector(List<Integer> productRatings, List<Integer> raitingUsersIds, Matrix U,
+                              int p) {
         for (int i=0;i<M;i++){
             vector[i]=Double.valueOf(0);
             for (int id : raitingUsersIds) {
