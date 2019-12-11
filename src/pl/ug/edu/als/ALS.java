@@ -91,14 +91,18 @@ public class ALS {
   }
 
   private void alg() {
-    for (int k = 0; k < 1; k++) {
-      calculateU();
+    for (int k = 0; k < 100; k++) {
+      calculateP();
       System.out.println("U");
       u.print();
       System.out.println("P");
-      calculateP();
+      calculateU();
       p.print();
     }
+      Matrix U_TRANS = u.transpose();
+      Matrix R = U_TRANS.multiply(p);
+      System.out.println("R");
+      R.print();
   }
 
   private void calculateP() {
@@ -110,7 +114,7 @@ public class ALS {
       final Matrix BU = calculateXU(ratingUsersIds, u);
       BU.calculateVector(productRatings, ratingUsersIds, u, i);
 
-      calculateColumnValues(i, BU, u);
+      calculateColumnValues(i, BU, p);
     }
   }
 
