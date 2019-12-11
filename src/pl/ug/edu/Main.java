@@ -7,33 +7,28 @@
 package pl.ug.edu;
 
 import java.io.IOException;
-import java.util.List;
 import pl.ug.edu.als.ALS;
-import pl.ug.edu.data.DataUtil;
-import pl.ug.edu.data.Parser;
-import pl.ug.edu.data.Review;
 
+/**
+ * <h1>ALS</h1>
+ * This program is a propotype recommender system which uses Alternating Least Square method
+ * @author Anna Konstantynowicz
+ * @author Marcin Szczepaniak
+ * @author Jakub Ściślewski
+ * @version 1.0
+ */
 public class Main {
 
+  /**
+   * This is the main method which creates als object and starts runAlsAlgorithm method
+   * @param args unused
+   */
   public static void main(String[] args) {
+    ALS als = new ALS(3, 0.1);
     try {
-      runAlsAlgorithm();
+      als.runAlsAlgorithm();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  private static void runAlsAlgorithm() throws IOException {
-    Parser parser = new Parser();
-    List<Review> list = parser.readData("sample.txt");
-    System.out.println(DataUtil.getHighestProductId(list));
-    ALS als = new ALS(3, 0.1, DataUtil.getHighestProductId(list) + 1);
-    for (Review r : list) {
-      System.out.println(r);
-      als.addReview(r);
-    }
-    als.generateRandomPMatrix();
-    als.generateRandomUMatrix();
-    als.alg();
   }
 }

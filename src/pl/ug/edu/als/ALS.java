@@ -5,20 +5,20 @@
 
 package pl.ug.edu.als;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import pl.ug.edu.data.DataUtil;
+import pl.ug.edu.data.Parser;
 import pl.ug.edu.data.Review;
 import pl.ug.edu.gauss.Gauss;
 import pl.ug.edu.gauss.Matrix;
 import pl.ug.edu.generic.Double;
 
 public class ALS {
-
-  private final int productsAmount;
 
   private final Map<String, Integer> userList;
 
@@ -28,16 +28,37 @@ public class ALS {
 
   private final double lambda;
 
+  private int productsAmount;
+
   private Matrix p;
 
   private Matrix u;
 
-  public ALS(final int d, final double lambda, final int productsAmount) {
+  public ALS(final int d, final double lambda) {
     this.d = d;
     this.lambda = lambda;
-    this.productsAmount = productsAmount;
     userList = new TreeMap<>();
     userRatingsList = new ArrayList<>();
+  }
+
+  /**
+   * This method runs all other methods one by one.
+   * @throws IOException On input error.
+   * @see IOException
+   */
+  public void runAlsAlgorithm() throws IOException {
+    Parser parser = new Parser();
+    List<Review> reviewList = parser.readData("sample.txt");
+    System.out.println(DataUtil.getHighestProductId(reviewList));
+    setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
+
+    for (Review review : reviewList) {
+      System.out.println(review);
+      addReview(review);
+    }
+    generateRandomPMatrix();
+    generateRandomUMatrix();
+    alg();
   }
 
   private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
@@ -45,7 +66,11 @@ public class ALS {
     x.swapWithSolution(gauss.PG(XU.matrix, XU.vector), i);
   }
 
-  public void addReview(final Review review) {
+  private void setProductsAmount(int productsAmount) {
+    this.productsAmount = productsAmount;
+  }
+
+  private void addReview(final Review review) {
     addUserIfNotInList(review.getUserId());
     userRatingsList.get(userList.get(review.getUserId()))
         .set(review.getProductId(), review.getRating());
@@ -65,7 +90,7 @@ public class ALS {
     userRatingsList.add(new ArrayList<>(Collections.nCopies(productsAmount, 0)));
   }
 
-  public void alg() {
+  private void alg() {
     for (int k = 0; k < 1; k++) {
       calculateU();
       System.out.println("U");
@@ -125,14 +150,14 @@ public class ALS {
     }
   }
 
-  public void generateRandomPMatrix() {
+  private void generateRandomPMatrix() {
     System.out.println("Generuje P");
     p = new Matrix(d, productsAmount);
     p.generateRandomMatrix();
     p.print();
   }
 
-  public void generateRandomUMatrix() {
+  private void generateRandomUMatrix() {
     System.out.println("Generuje U");
     u = new Matrix(d, userList.size());
     u.generateRandomMatrix();
