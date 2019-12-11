@@ -7,12 +7,23 @@ package pl.ug.edu.data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class for operations on data.
+ */
 public final class DataUtil {
 
+  /**
+   * Constructor
+   */
   private DataUtil() {
     throw new IllegalStateException("Utility Class");
   }
 
+  /**
+   * Get highest product id in the list of reviews.
+   * @param reviewList List of reviews.
+   * @return Highest product id in the list of reviews.
+   */
   public static int getHighestProductId(Iterable<Review> reviewList) {
     int highestId = 0;
     for (Review review : reviewList) {
@@ -23,6 +34,11 @@ public final class DataUtil {
     return highestId;
   }
 
+  /**
+   * Generates list containing id's of products in the userRatings.
+   * @param userRatings List of user ratings.
+   * @return List of product id's.
+   */
   public static List<Integer> getRatedProductsIds(Iterable<Integer> userRatings) {
     ArrayList<Integer> ratedProductIds = new ArrayList<>();
     int productId = 0;
@@ -36,7 +52,7 @@ public final class DataUtil {
   }
 
   public static List<Integer> getRatingUserIds(List<List<Integer>> userRatingsList, int p) {
-    ArrayList<Integer> ratingUsersIds = new ArrayList<>();
+    List<Integer> ratingUsersIds = new ArrayList<>();
     for (List<Integer> userRaiting : userRatingsList) {
       if (userRaiting.get(p) != 0) {
         ratingUsersIds.add(userRatingsList.indexOf(userRaiting));

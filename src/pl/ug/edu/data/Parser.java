@@ -107,8 +107,6 @@ public final class Parser {
           review.setProductId(currentProductId);
           review.setCategory(currentCategory);
         }
-      } else {
-        throw new IllegalStateException();
       }
     }
     return reviewList;

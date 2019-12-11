@@ -22,7 +22,7 @@ public class Main {
    * @param args unused
    */
   public static void main(String[] args) {
-    ALS als = new ALS(3, 0.1);
+    ALS als = new ALS(10, 0.1);
     try {
       als.runAlsAlgorithm();
     } catch (IOException e) {

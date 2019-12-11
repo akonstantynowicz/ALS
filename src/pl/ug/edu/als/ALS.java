@@ -19,6 +19,8 @@ import pl.ug.edu.generic.Double;
 
 public class ALS {
 
+  private static final double MILISECONDS_IN_SECOND = 1000;
+
   private static final int NUMBER_OF_ITERATIONS = 100;
 
   private final Map<String, Integer> userList;
@@ -56,10 +58,13 @@ public class ALS {
     List<Review> reviewList = Parser.parseFile("sample.txt");
     System.out.println(DataUtil.getHighestProductId(reviewList));
     setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
+    long startTime = System.currentTimeMillis();
     generateUserRatingsFromReviewList(reviewList);
     generateRandomPMatrix();
     generateRandomUMatrix();
     alg();
+    System.out.println(
+        "\nTime: " + ((System.currentTimeMillis() - startTime) / MILISECONDS_IN_SECOND) + "s");
   }
 
   private void generateUserRatingsFromReviewList(List<Review> reviewList) {
