@@ -1,7 +1,6 @@
-/*******************************************************************************
- *  Copyright (C) 2019 Anna Konstantynowicz, Marcin Szczepaniak, Jakub Ściślewski
- *  All rights reserved
- ******************************************************************************/
+
+//  Copyright (C) 2019 Anna Konstantynowicz, Marcin Szczepaniak, Jakub Ściślewski
+//  All rights reserved
 
 package pl.ug.edu.data;
 
@@ -14,7 +13,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Parser {
+public final class Parser {
 
   private static final Pattern idProductLinePattern = Pattern.compile("^Id:.*$");
 
@@ -28,6 +27,10 @@ public class Parser {
 
   private static final Pattern userIdPattern = Pattern.compile("([A-Z]|[0-9])+");
 
+  private Parser() {
+    throw new IllegalStateException("Utility Class");
+  }
+
   private static String extractPatternValue(String line, Pattern p) {
 
     Matcher matcher = p.matcher(line);
@@ -37,7 +40,7 @@ public class Parser {
     return null;
   }
 
-  public List<Review> readData(String path) throws IOException {
+  public static List<Review> parseFile(String path) throws IOException {
 
     List<Review> reviewList = new ArrayList<>();
 
@@ -48,7 +51,7 @@ public class Parser {
     return reviewList;
   }
 
-  private void generateReviewList(List<Review> reviewList, Scanner scanner) {
+  private static void generateReviewList(List<Review> reviewList, Scanner scanner) {
     Review review = new Review();
 
     String productIdLine;

@@ -1,7 +1,6 @@
-/*******************************************************************************
- *  Copyright (C) 2019 Anna Konstantynowicz, Marcin Szczepaniak, Jakub Ściślewski
- *  All rights reserved
- ******************************************************************************/
+
+//  Copyright (C) 2019 Anna Konstantynowicz, Marcin Szczepaniak, Jakub Ściślewski
+//  All rights reserved
 
 package pl.ug.edu.als;
 
@@ -19,6 +18,8 @@ import pl.ug.edu.gauss.Matrix;
 import pl.ug.edu.generic.Double;
 
 public class ALS {
+
+  private static final int NUMBER_OF_ITERATIONS = 100;
 
   private final Map<String, Integer> userList;
 
@@ -41,36 +42,38 @@ public class ALS {
     userRatingsList = new ArrayList<>();
   }
 
+  private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
+    final Gauss<Double> gauss = new Gauss<>(XU.M, XU.N);
+    x.swapWithSolution(gauss.PG(XU.matrix, XU.vector), i);
+  }
+
   /**
-   * This method runs all other methods one by one.
+   * This method runs all other methods in algorithm one by one.
    * @throws IOException On input error.
    * @see IOException
    */
   public void runAlsAlgorithm() throws IOException {
-    Parser parser = new Parser();
-    List<Review> reviewList = parser.readData("sample.txt");
+    List<Review> reviewList = Parser.parseFile("sample.txt");
     System.out.println(DataUtil.getHighestProductId(reviewList));
     setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
-
-    for (Review review : reviewList) {
-      System.out.println(review);
-      addReview(review);
-    }
+    generateUserRatingsFromReviewList(reviewList);
     generateRandomPMatrix();
     generateRandomUMatrix();
     alg();
   }
 
-  private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
-    final Gauss<Double> gauss = new Gauss<>(XU.M, XU.N);
-    x.swapWithSolution(gauss.PG(XU.matrix, XU.vector), i);
+  private void generateUserRatingsFromReviewList(List<Review> reviewList) {
+    for (Review review : reviewList) {
+      System.out.println(review);
+      addUserRating(review);
+    }
   }
 
   private void setProductsAmount(int productsAmount) {
     this.productsAmount = productsAmount;
   }
 
-  private void addReview(final Review review) {
+  private void addUserRating(final Review review) {
     addUserIfNotInList(review.getUserId());
     userRatingsList.get(userList.get(review.getUserId()))
         .set(review.getProductId(), review.getRating());
@@ -91,7 +94,14 @@ public class ALS {
   }
 
   private void alg() {
-    for (int k = 0; k < 100; k++) {
+    calculatePAndUMatrixes();
+    Matrix resultMatrix = generateResultMatrix();
+    System.out.println("Result Matrix:");
+    resultMatrix.print();
+  }
+
+  private void calculatePAndUMatrixes() {
+    for (int k = 0; k < NUMBER_OF_ITERATIONS; k++) {
       calculateP();
       System.out.println("U");
       u.print();
@@ -99,10 +109,11 @@ public class ALS {
       calculateU();
       p.print();
     }
-      Matrix U_TRANS = u.transpose();
-      Matrix R = U_TRANS.multiply(p);
-      System.out.println("R");
-      R.print();
+  }
+
+  private Matrix generateResultMatrix() {
+    Matrix uTransposed = u.transpose();
+    return uTransposed.multiply(p);
   }
 
   private void calculateP() {
