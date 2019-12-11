@@ -4,6 +4,9 @@
 
 package pl.ug.edu.data;
 
+/**
+ * Represents single user review
+ */
 public class Review {
 
   private String userId;

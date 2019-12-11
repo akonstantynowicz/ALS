@@ -13,6 +13,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Utility class used to parse data
+ */
 public final class Parser {
 
   private static final Pattern idProductLinePattern = Pattern.compile("^Id:.*$");
@@ -31,27 +34,43 @@ public final class Parser {
     throw new IllegalStateException("Utility Class");
   }
 
-  private static String extractPatternValue(String line, Pattern p) {
+  /**
+   * Extracts pattern value from given line.
+   * @param line    String line from which pattern is extracted.
+   * @param pattern Pattern which is extracted from line.
+   * @return Input subsequence matched by the previous match result or null if none found.
+   */
+  private static String extractPatternValue(String line, Pattern pattern) {
 
-    Matcher matcher = p.matcher(line);
+    Matcher matcher = pattern.matcher(line);
     if (matcher.find()) {
       return (matcher.group());
     }
     return null;
   }
 
+  /**
+   * Parses file
+   * @param path Path to file.
+   * @return List containing all reviews from file.
+   * @throws IOException On input error.
+   */
   public static List<Review> parseFile(String path) throws IOException {
-
-    List<Review> reviewList = new ArrayList<>();
-
+    List<Review> reviewList;
     try (FileInputStream inputStream = new FileInputStream(path);
         Scanner scanner = new Scanner(inputStream, String.valueOf(StandardCharsets.UTF_8))) {
-      generateReviewList(reviewList, scanner);
+      reviewList = generateReviewList(scanner);
     }
     return reviewList;
   }
 
-  private static void generateReviewList(List<Review> reviewList, Scanner scanner) {
+  /**
+   * Generate list containing reviews from given scanner.
+   * @param scanner Scanner containing reviews to parse.
+   * @return List of reviews.
+   */
+  private static List<Review> generateReviewList(Scanner scanner) {
+    List<Review> reviewList = new ArrayList<>();
     Review review = new Review();
 
     String productIdLine;
@@ -88,7 +107,10 @@ public final class Parser {
           review.setProductId(currentProductId);
           review.setCategory(currentCategory);
         }
+      } else {
+        throw new IllegalStateException();
       }
     }
+    return reviewList;
   }
 }
