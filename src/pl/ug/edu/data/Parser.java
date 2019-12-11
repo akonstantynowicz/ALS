@@ -42,7 +42,7 @@ public class Parser {
     List<Review> reviewList = new ArrayList<>();
 
     try (FileInputStream inputStream = new FileInputStream(path);
-        Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8)) {
+        Scanner scanner = new Scanner(inputStream, String.valueOf(StandardCharsets.UTF_8))) {
       generateReviewList(reviewList, scanner);
     }
     return reviewList;
