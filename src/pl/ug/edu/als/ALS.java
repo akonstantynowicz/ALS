@@ -228,8 +228,9 @@ public class ALS {
             userResultsAsNames[productIndex] = productNames.get(productIndex);
         }
         System.out.println(
-                "Top ten recommended products for user: " + userId + "\n" + Arrays.toString(userResults) + "\n" + Arrays.toString(userResultsAsNames));
-
+                "Top ten recommended products for user: " + userId +
+                        "\n" + Arrays.toString(userResults) +
+                        "\n" + Arrays.toString(userResultsAsNames));
     }
 
 }
