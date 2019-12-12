@@ -42,4 +42,13 @@ public class Review {
   public void setRating(int rating) {
     this.rating = rating;
   }
+
+  @Override
+  public String toString() {
+    return "Review{" +
+            "product=" + product +
+            ", userId='" + userId + '\'' +
+            ", rating=" + rating +
+            '}';
+  }
 }

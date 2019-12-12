@@ -58,17 +58,13 @@ public class ALS {
      */
     private void generateProductNamesList(List<Review> reviewList) {
         int currentId = 0;
-        boolean addedForId = false;
         for (Review review : reviewList) {
             if (review.getProduct().getProductId() > currentId) {
-                if (!addedForId) {
-                    productNames.add("None");
-                    addedForId = true;
-                }
+                productNames.add("None");
                 currentId++;
             } else if (!productNames.contains(review.getProduct().getProductName())) {
                 productNames.add(review.getProduct().getProductName());
-                addedForId = true;
+                currentId++;
             }
         }
     }
@@ -94,11 +90,7 @@ public class ALS {
     private void calculatePAndUMatrixes() {
         for (int k = 0; k < NUMBER_OF_ITERATIONS; k++) {
             calculateP();
-            //System.out.println("U");
-            //u.print();
-            //System.out.println("P");
             calculateU();
-            //p.print();
         }
     }
 
@@ -155,13 +147,6 @@ public class ALS {
         }
     }
 
-    private void generateRandomPMatrix() {
-        System.out.println("Generuje P");
-        p = new Matrix(d, productsAmount);
-        p.generateRandomMatrix();
-        p.print();
-    }
-
     /**
      * This method runs all other methods in algorithm one by one.
      *
@@ -169,7 +154,7 @@ public class ALS {
      * @see IOException
      */
     public void runAlsAlgorithm() throws IOException {
-        List<Review> reviewList = Parser.parseFile("sample.txt");
+        List<Review> reviewList = Parser.parseFile("sample2.txt");
         //System.out.println(DataUtil.getHighestProductId(reviewList));
         setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
         long startTime = System.currentTimeMillis();
@@ -180,13 +165,21 @@ public class ALS {
         System.out.println(
                 "\nd = " + d + "\nTime: " + ((System.currentTimeMillis() - startTime)
                         / MILISECONDS_IN_SECOND) + "s\n\n");
+        generateProductNamesList(reviewList);
     }
 
     private void generateUserRatingsFromReviewList(List<Review> reviewList) {
         for (Review review : reviewList) {
-            //System.out.println(review);
+            System.out.println(review);
             addUserRating(review);
         }
+    }
+
+    private void generateRandomPMatrix() {
+        System.out.println("Generuje P");
+        p = new Matrix(d, productsAmount);
+        p.generateRandomMatrix();
+        p.print();
     }
 
     private void generateRandomUMatrix() {
@@ -223,10 +216,7 @@ public class ALS {
     }
 
     private void addUserToList(final String userId) {
-        //System.out.println("Dodawanie nowego usera do listy");
         userList.put(userId, userRatingsList.size());
         userRatingsList.add(new ArrayList<>(Collections.nCopies(productsAmount, 0)));
     }
-
-
 }
