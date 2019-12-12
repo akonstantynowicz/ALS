@@ -6,7 +6,6 @@ package pl.ug.edu.als;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +61,7 @@ public class ALS {
    */
   public void runAlsAlgorithm() throws IOException {
     List<Review> reviewList = Parser.parseFile("sample.txt");
-    System.out.println(DataUtil.getHighestProductId(reviewList));
+    //System.out.println(DataUtil.getHighestProductId(reviewList));
     setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
     long startTime = System.currentTimeMillis();
     generateUserRatingsFromReviewList(reviewList);
@@ -70,17 +69,13 @@ public class ALS {
     generateRandomUMatrix();
     alg();
     System.out.println(
-        "\nTime: " + ((System.currentTimeMillis() - startTime) / MILISECONDS_IN_SECOND) + "s");
-  }
-
-  //TODO dokończyć te metode
-  private void generateProductNamesList() {
-
+        "\nd = " + d + "\nTime: " + ((System.currentTimeMillis() - startTime)
+            / MILISECONDS_IN_SECOND) + "s\n\n");
   }
 
   private void generateUserRatingsFromReviewList(List<Review> reviewList) {
     for (Review review : reviewList) {
-      System.out.println(review);
+      //System.out.println(review);
       addUserRating(review);
     }
   }
@@ -97,14 +92,14 @@ public class ALS {
 
   private void addUserIfNotInList(final String userId) {
     if (userList.containsKey(userId)) {
-      System.out.println("User już istnieje");
+      //System.out.println("User już istnieje");
     } else {
       addUserToList(userId);
     }
   }
 
   private void addUserToList(final String userId) {
-    System.out.println("Dodawanie nowego usera do listy");
+    //System.out.println("Dodawanie nowego usera do listy");
     userList.put(userId, userRatingsList.size());
     userRatingsList.add(new ArrayList<>(Collections.nCopies(productsAmount, 0)));
   }
@@ -119,11 +114,11 @@ public class ALS {
   private void calculatePAndUMatrixes() {
     for (int k = 0; k < NUMBER_OF_ITERATIONS; k++) {
       calculateP();
-      System.out.println("U");
-      u.print();
-      System.out.println("P");
+      //System.out.println("U");
+      //u.print();
+      //System.out.println("P");
       calculateU();
-      p.print();
+      // p.print();
     }
   }
 
@@ -182,30 +177,16 @@ public class ALS {
   }
 
   private void generateRandomPMatrix() {
-    System.out.println("Generuje P");
+    // System.out.println("Generuje P");
     p = new Matrix(d, productsAmount);
     p.generateRandomMatrix();
-    p.print();
+    // p.print();
   }
 
   private void generateRandomUMatrix() {
-    System.out.println("Generuje U");
+    // System.out.println("Generuje U");
     u = new Matrix(d, userList.size());
     u.generateRandomMatrix();
-    u.print();
+    //u.print();
   }
-
-  //TODO Dodać sortowanie wyników żeby znaleźć najbardziej pasujące produkty elementy
-  // macierzy resultMatrix są typu Generic.Double i nie działa na nich żadna funkcja sortująca
-  public void getTopTenRecommendedProductsForUser(String userId) {
-    String[] userTopTenProducts = new String[10];
-    Double[] userResults = new Double[productsAmount];
-    int userIndex = userList.get(userId);
-    for (int productIndex = 0; productIndex < productsAmount; productIndex++) {
-      userResults[productIndex] = resultMatrix.matrix[userIndex][productIndex];
-    }
-    System.out.println(
-        "Top ten recommended products for user: " + userId + "\n" + Arrays.toString(userResults));
-  }
-
 }
