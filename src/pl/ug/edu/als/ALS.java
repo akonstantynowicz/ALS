@@ -192,11 +192,11 @@ public class ALS {
     String[] userTopTenProducts = new String[10];
     Double[] userResults = new Double[productsAmount];
     int userIndex = userList.get(userId);
-    for (int productIndex = 0; productIndex < productsAmount; productIndex++) {
-      userResults[productIndex] = resultMatrix.matrix[userIndex][productIndex];
+    if (productsAmount >= 0) {
+      System.arraycopy(resultMatrix.matrix[userIndex], 0, userResults, 0, productsAmount);
     }
     System.out.println(
         "Top ten recommended products for user: " + userId + "\n" + Arrays.toString(userResults));
   }
-
 }
+
