@@ -28,6 +28,8 @@ public class ALS {
 
   private final List<List<Integer>> userRatingsList;
 
+  private final List<String> productNames;
+
   private final int d;
 
   private final double lambda;
@@ -45,6 +47,7 @@ public class ALS {
     this.lambda = lambda;
     userList = new TreeMap<>();
     userRatingsList = new ArrayList<>();
+    productNames = new ArrayList<>();
   }
 
   private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
@@ -70,6 +73,11 @@ public class ALS {
         "\nTime: " + ((System.currentTimeMillis() - startTime) / MILISECONDS_IN_SECOND) + "s");
   }
 
+  //TODO dokończyć te metode
+  private void generateProductNamesList() {
+
+  }
+
   private void generateUserRatingsFromReviewList(List<Review> reviewList) {
     for (Review review : reviewList) {
       System.out.println(review);
@@ -84,7 +92,7 @@ public class ALS {
   private void addUserRating(final Review review) {
     addUserIfNotInList(review.getUserId());
     userRatingsList.get(userList.get(review.getUserId()))
-        .set(review.getProductId(), review.getRating());
+        .set(review.getProduct().getProductId(), review.getRating());
   }
 
   private void addUserIfNotInList(final String userId) {
@@ -187,16 +195,17 @@ public class ALS {
     u.print();
   }
 
-  //TODO Dodać sortowanie wyników żeby znaleźć najbardziej pasujące produkty elementy macierzy resultMatrix są typu Generic.Double i nie działa na nich żadna funkcja sortująca
+  //TODO Dodać sortowanie wyników żeby znaleźć najbardziej pasujące produkty elementy
+  // macierzy resultMatrix są typu Generic.Double i nie działa na nich żadna funkcja sortująca
   public void getTopTenRecommendedProductsForUser(String userId) {
     String[] userTopTenProducts = new String[10];
     Double[] userResults = new Double[productsAmount];
     int userIndex = userList.get(userId);
-    if (productsAmount >= 0) {
-      System.arraycopy(resultMatrix.matrix[userIndex], 0, userResults, 0, productsAmount);
+    for (int productIndex = 0; productIndex < productsAmount; productIndex++) {
+      userResults[productIndex] = resultMatrix.matrix[userIndex][productIndex];
     }
     System.out.println(
         "Top ten recommended products for user: " + userId + "\n" + Arrays.toString(userResults));
   }
-}
 
+}

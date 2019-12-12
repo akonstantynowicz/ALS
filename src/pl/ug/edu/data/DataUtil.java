@@ -27,8 +27,8 @@ public final class DataUtil {
   public static int getHighestProductId(Iterable<Review> reviewList) {
     int highestId = 0;
     for (Review review : reviewList) {
-      if (review.getProductId() > highestId) {
-        highestId = review.getProductId();
+      if (review.getProduct().getProductId() > highestId) {
+        highestId = review.getProduct().getProductId();
       }
     }
     return highestId;

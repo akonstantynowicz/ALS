@@ -9,15 +9,25 @@ package pl.ug.edu.data;
  */
 public class Review {
 
-  private String userId;
+  private Product product;
 
-  private int productId;
+  private String userId;
 
   private int rating;
 
   private String category;
 
-  Review() { }
+  Review() {
+    this.product = new Product();
+  }
+
+  public Product getProduct() {
+    return product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
+  }
 
   public String getUserId() {
     return userId;
@@ -25,14 +35,6 @@ public class Review {
 
   public void setUserId(String userId) {
     this.userId = userId;
-  }
-
-  public int getProductId() {
-    return productId;
-  }
-
-  public void setProductId(int productId) {
-    this.productId = productId;
   }
 
   public int getRating() {
@@ -49,15 +51,5 @@ public class Review {
 
   public void setCategory(String category) {
     this.category = category;
-  }
-
-  @Override
-  public String toString() {
-    return "Review{" +
-        "idUser='" + userId + '\'' +
-        ", idProduct='" + productId + '\'' +
-        ", rating=" + rating +
-        ", category='" + category + '\'' +
-        '}';
   }
 }

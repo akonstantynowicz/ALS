@@ -88,10 +88,11 @@ public final class Parser {
 
       String line = scanner.nextLine();
 
+      //TODO dodać pobieranie nazwy produktu
       if ((productIdLine = extractPatternValue(line, idProductLinePattern)) != null
           && (productId = extractPatternValue(productIdLine, numberPattern)) != null) {
         currentProductId = Integer.parseInt(productId.trim());
-        review.setProductId(currentProductId);
+        review.getProduct().setProductId(currentProductId);
       } else if ((categoryLine = extractPatternValue(line, categoryLinePattern)) != null
           && (category = extractPatternValue(categoryLine, categoryPattern)) != null) {
         currentCategory = category.trim();
@@ -104,7 +105,7 @@ public final class Parser {
           review.setRating(Integer.parseInt(rating.trim()));
           reviewList.add(review);
           review = new Review();
-          review.setProductId(currentProductId);
+          review.getProduct().setProductId(currentProductId);
           review.setCategory(currentCategory);
         }
       }
