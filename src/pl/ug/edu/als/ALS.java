@@ -6,6 +6,7 @@ package pl.ug.edu.als;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,8 @@ public class ALS {
   private Matrix p;
 
   private Matrix u;
+
+  private Matrix resultMatrix;
 
   public ALS(final int d, final double lambda) {
     this.d = d;
@@ -100,7 +103,7 @@ public class ALS {
 
   private void alg() {
     calculatePAndUMatrixes();
-    Matrix resultMatrix = generateResultMatrix();
+    resultMatrix = generateResultMatrix();
     System.out.println("Result Matrix:");
     resultMatrix.print();
   }
@@ -182,6 +185,18 @@ public class ALS {
     u = new Matrix(d, userList.size());
     u.generateRandomMatrix();
     u.print();
+  }
+
+  //TODO Dodać sortowanie wyników żeby znaleźć najbardziej pasujące produkty elementy macierzy resultMatrix są typu Generic.Double i nie działa na nich żadna funkcja sortująca
+  public void getTopTenRecommendedProductsForUser(String userId) {
+    String[] userTopTenProducts = new String[10];
+    Double[] userResults = new Double[productsAmount];
+    int userIndex = userList.get(userId);
+    for (int productIndex = 0; productIndex < productsAmount; productIndex++) {
+      userResults[productIndex] = resultMatrix.matrix[userIndex][productIndex];
+    }
+    System.out.println(
+        "Top ten recommended products for user: " + userId + "\n" + Arrays.toString(userResults));
   }
 
 }

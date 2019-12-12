@@ -9,7 +9,7 @@ import pl.ug.edu.als.ALS;
 
 /**
  * <h1>ALS</h1>
- * This program is a propotype recommender system which uses Alternating Least Square method
+ * This program is a propotype recommender system which uses Alternating Least Square method.
  * @author Anna Konstantynowicz
  * @author Marcin Szczepaniak
  * @author Jakub Ściślewski
@@ -22,11 +22,13 @@ public class Main {
    * @param args unused
    */
   public static void main(String[] args) {
-    ALS als = new ALS(10, 0.1);
+    ALS als = new ALS(3, 1);
     try {
       als.runAlsAlgorithm();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+    als.getTopTenRecommendedProductsForUser("A2JW67OY8U6HHK");
   }
+
 }
