@@ -54,7 +54,7 @@ public class ALS {
 
     /**
      * Generates list of names corresponding to product id's
-     * Name is set as 'None' if there is no product reviews for certain id
+     * Name is set as 'None' if there is no product reviews for certain  id
      */
     private void generateProductNamesList(List<Review> reviewList) {
         int currentId = 0;
