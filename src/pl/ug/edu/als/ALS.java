@@ -69,7 +69,6 @@ public class ALS {
         }
     }
 
-
     private void setProductsAmount(int productsAmount) {
         this.productsAmount = productsAmount;
     }
@@ -154,7 +153,7 @@ public class ALS {
      * @see IOException
      */
     public void runAlsAlgorithm() throws IOException {
-        List<Review> reviewList = Parser.parseFile("sample2.txt");
+        List<Review> reviewList = Parser.parseFile("sample.txt");
         //System.out.println(DataUtil.getHighestProductId(reviewList));
         setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
         long startTime = System.currentTimeMillis();
@@ -170,7 +169,7 @@ public class ALS {
 
     private void generateUserRatingsFromReviewList(List<Review> reviewList) {
         for (Review review : reviewList) {
-            System.out.println(review);
+            //System.out.println(review);
             addUserRating(review);
         }
     }
@@ -208,9 +207,7 @@ public class ALS {
 
 
     private void addUserIfNotInList(final String userId) {
-        if (userList.containsKey(userId)) {
-            //System.out.println("User już istnieje");
-        } else {
+        if (!userList.containsKey(userId)) {
             addUserToList(userId);
         }
     }
