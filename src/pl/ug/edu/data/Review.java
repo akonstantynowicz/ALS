@@ -15,8 +15,6 @@ public class Review {
 
   private int rating;
 
-  private String category;
-
   Review() {
     this.product = new Product();
   }
@@ -45,11 +43,12 @@ public class Review {
     this.rating = rating;
   }
 
-  public String getCategory() {
-    return category;
-  }
-
-  public void setCategory(String category) {
-    this.category = category;
+  @Override
+  public String toString() {
+    return "Review{" +
+            "product=" + product +
+            ", userId='" + userId + '\'' +
+            ", rating=" + rating +
+            '}';
   }
 }

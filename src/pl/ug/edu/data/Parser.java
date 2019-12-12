@@ -20,13 +20,15 @@ public final class Parser {
 
   private static final Pattern idProductLinePattern = Pattern.compile("^Id:.*$");
 
+  private static final Pattern titleLinePattern = Pattern.compile("title:.*");
+
   private static final Pattern reviewLinePattern = Pattern.compile("cutomer:.*rating:\\s*[0-9]");
 
   private static final Pattern categoryLinePattern = Pattern.compile("group:.*");
 
   private static final Pattern numberPattern = Pattern.compile("\\s\\d+");
 
-  private static final Pattern categoryPattern = Pattern.compile("\\s([A-Z]|[a-z])+$");
+  private static final Pattern wordPattern = Pattern.compile("\\s.*");
 
   private static final Pattern userIdPattern = Pattern.compile("([A-Z]|[0-9])+");
 
@@ -73,40 +75,45 @@ public final class Parser {
     List<Review> reviewList = new ArrayList<>();
     Review review = new Review();
 
-    String productIdLine;
-    String categoryLine;
-    String reviewLine;
+    String currentLine;
+
     String productId;
+    String title;
     String category;
     String userId;
     String rating;
 
     int currentProductId = -1;
+    String currentTitle = null;
     String currentCategory = null;
 
     while (scanner.hasNextLine()) {
 
       String line = scanner.nextLine();
 
-      //TODO dodać pobieranie nazwy produktu
-      if ((productIdLine = extractPatternValue(line, idProductLinePattern)) != null
-          && (productId = extractPatternValue(productIdLine, numberPattern)) != null) {
+      if ((currentLine = extractPatternValue(line, idProductLinePattern)) != null
+          && (productId = extractPatternValue(currentLine, numberPattern)) != null) {
         currentProductId = Integer.parseInt(productId.trim());
         review.getProduct().setProductId(currentProductId);
-      } else if ((categoryLine = extractPatternValue(line, categoryLinePattern)) != null
-          && (category = extractPatternValue(categoryLine, categoryPattern)) != null) {
+      } else if ((currentLine = extractPatternValue(line, titleLinePattern)) != null
+              && (title = extractPatternValue(currentLine, wordPattern)) != null) {
+        currentTitle = title.trim();
+        review.getProduct().setProductName(title);
+      } else if ((currentLine = extractPatternValue(line, categoryLinePattern)) != null
+          && (category = extractPatternValue(currentLine, wordPattern)) != null) {
         currentCategory = category.trim();
-        review.setCategory(currentCategory);
-      } else if ((reviewLine = extractPatternValue(line, reviewLinePattern)) != null) {
-        if ((userId = extractPatternValue(reviewLine, userIdPattern)) != null) {
+        review.getProduct().setProductCategory(currentCategory);
+      } else if ((currentLine = extractPatternValue(line, reviewLinePattern)) != null) {
+        if ((userId = extractPatternValue(currentLine, userIdPattern)) != null) {
           review.setUserId(userId);
         }
-        if ((rating = extractPatternValue(reviewLine, numberPattern)) != null) {
+        if ((rating = extractPatternValue(currentLine, numberPattern)) != null) {
           review.setRating(Integer.parseInt(rating.trim()));
           reviewList.add(review);
           review = new Review();
           review.getProduct().setProductId(currentProductId);
-          review.setCategory(currentCategory);
+          review.getProduct().setProductName(currentTitle);
+          review.getProduct().setProductCategory(currentCategory);
         }
       }
     }
