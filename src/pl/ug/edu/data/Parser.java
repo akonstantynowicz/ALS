@@ -98,7 +98,7 @@ public final class Parser {
       } else if ((currentLine = extractPatternValue(line, titleLinePattern)) != null
               && (title = extractPatternValue(currentLine, wordPattern)) != null) {
         currentTitle = title.trim();
-        review.getProduct().setProductName(title);
+        review.getProduct().setProductName(currentTitle);
       } else if ((currentLine = extractPatternValue(line, categoryLinePattern)) != null
           && (category = extractPatternValue(currentLine, wordPattern)) != null) {
         currentCategory = category.trim();
