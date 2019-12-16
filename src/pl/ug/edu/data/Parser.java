@@ -32,6 +32,7 @@ public final class Parser {
 
   private static final Pattern userIdPattern = Pattern.compile("([A-Z]|[0-9])+");
 
+
   private Parser() {
     throw new IllegalStateException("Utility Class");
   }
@@ -73,6 +74,7 @@ public final class Parser {
    */
   private static List<Review> generateReviewList(Scanner scanner) {
     List<Review> reviewList = new ArrayList<>();
+    List<Review> productReviewList = new ArrayList<Review>();
     Review review = new Review();
 
     String currentLine;
@@ -83,6 +85,7 @@ public final class Parser {
     String userId;
     String rating;
 
+    int minReviews = 5;
     int currentProductId = -1;
     String currentTitle = null;
     String currentCategory = null;
@@ -95,6 +98,8 @@ public final class Parser {
           && (productId = extractPatternValue(currentLine, numberPattern)) != null) {
         currentProductId = Integer.parseInt(productId.trim());
         review.getProduct().setProductId(currentProductId);
+
+        productReviewList = addFilteredReviews(reviewList, productReviewList, minReviews);
       } else if ((currentLine = extractPatternValue(line, titleLinePattern)) != null
               && (title = extractPatternValue(currentLine, wordPattern)) != null) {
         currentTitle = title.trim();
@@ -109,7 +114,8 @@ public final class Parser {
         }
         if ((rating = extractPatternValue(currentLine, numberPattern)) != null) {
           review.setRating(Integer.parseInt(rating.trim()));
-          reviewList.add(review);
+          productReviewList.add(review);
+
           review = new Review();
           review.getProduct().setProductId(currentProductId);
           review.getProduct().setProductName(currentTitle);
@@ -117,6 +123,20 @@ public final class Parser {
         }
       }
     }
+    productReviewList = addFilteredReviews(reviewList, productReviewList, minReviews);
     return reviewList;
+  }
+
+  private static List<Review> addFilteredReviews(List<Review> reviewList, List<Review> productReviewList, int minReviews) {
+    if (productReviewList.size() > minReviews) {
+      System.out.println("adding " + productReviewList.get(0).getProduct().getProductId());
+      reviewList.addAll(productReviewList);
+      productReviewList = new ArrayList<Review>();
+    }
+    else if (productReviewList.size() != 0){
+      System.out.println("not adding " + productReviewList.get(0).getProduct().getProductId());
+      productReviewList = new ArrayList<Review>();
+    }
+    return productReviewList;
   }
 }

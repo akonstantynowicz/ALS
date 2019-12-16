@@ -153,7 +153,7 @@ public class ALS {
      * @see IOException
      */
     public void runAlsAlgorithm() throws IOException {
-        List<Review> reviewList = Parser.parseFile("sample.txt");
+        List<Review> reviewList = Parser.parseFile("sample2.txt");
         //System.out.println(DataUtil.getHighestProductId(reviewList));
         setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
         long startTime = System.currentTimeMillis();

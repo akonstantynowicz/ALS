@@ -27,7 +27,7 @@ public class Main {
     try {
       als.runAlsAlgorithm();
       //als.getTopTenRecommendedProductsForUser("A2JW67OY8U6HHK");
-      Test.testTimeForDifferentD(1, 5, 0.2);
+      //Test.testTimeForDifferentD(1, 5, 0.2);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
