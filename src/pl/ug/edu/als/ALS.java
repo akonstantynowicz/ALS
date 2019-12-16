@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.*;
 
 import pl.ug.edu.data.DataUtil;
+import pl.ug.edu.data.Key;
 import pl.ug.edu.data.Parser;
 import pl.ug.edu.data.Review;
 import pl.ug.edu.gauss.Gauss;
@@ -23,6 +24,8 @@ public class ALS {
     private final Map<String, Integer> userList;
 
     private final List<List<Integer>> userRatingsList;
+
+    private Map<Key, pl.ug.edu.generic.Double> testValues;
 
     private final List<String> productNames;
 
@@ -44,6 +47,7 @@ public class ALS {
         userList = new TreeMap<>();
         userRatingsList = new ArrayList<>();
         productNames = new ArrayList<>();
+        testValues = new HashMap<>();
     }
 
     private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
@@ -80,10 +84,12 @@ public class ALS {
     }
 
     private void alg() {
+        testValues = DataUtil.getTestData(userRatingsList);
         calculatePAndUMatrixes();
         resultMatrix = generateResultMatrix();
         System.out.println("Result Matrix:");
         resultMatrix.print();
+        System.out.println("error: " + DataUtil.checkTestData(resultMatrix,testValues));
     }
 
     private void calculatePAndUMatrixes() {

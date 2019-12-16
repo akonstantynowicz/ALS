@@ -16,18 +16,7 @@ public class Matrix {
 
   public Double[][] matrix;
 
-  public Double[] vectorX;
-
   public Double[] vector;
-
-  public void drukujWszystko() {
-    for (int i = 0; i < M; i++) {
-      for (int j = 0; j < N; j++) {
-        System.out.print(matrix[i][j] + " *" + vectorX[j]);
-      }
-      System.out.print(" | " + vector[i] + "\n");
-    }
-  }
 
   public void print() {
     for (int i = 0; i < M; i++) {
@@ -42,24 +31,7 @@ public class Matrix {
     this.M = M;
     this.N = N;
     matrix = new Double[M][N];
-//        vectorX = new Double[size];
     vector = new Double[M];
-
-//        getRandomMatrix();
-//        losujWektorX();
-//        obliczWektor();
-  }
-
-  private static int losujR() {
-    Random ran = new Random();
-    int r = ran.nextInt(131071) - 65536;
-    return r;
-  }
-
-  private void zerujWektor() {
-    for (int i = 0; i < N; i++) {
-      vector[i] = Double.valueOf(0);
-    }
   }
 
   public void generateRandomMatrix() {
@@ -79,14 +51,6 @@ public class Matrix {
           matrix[i][j] = Double.valueOf(0);
         }
       }
-    }
-  }
-
-  private void losujWektorX() {
-    int r;
-    for (int i = 0; i < M; i++) {
-      r = losujR();
-      vectorX[i] = Double.valueOf(r).divide(Double.valueOf(65536));
     }
   }
 

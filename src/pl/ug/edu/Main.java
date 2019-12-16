@@ -6,7 +6,6 @@ package pl.ug.edu;
 
 import java.io.IOException;
 import pl.ug.edu.als.ALS;
-import pl.ug.edu.als.Test;
 
 /**
  * <h1>ALS</h1>
