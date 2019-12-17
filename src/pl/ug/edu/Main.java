@@ -22,7 +22,7 @@ public class Main {
    * @param args unused
    */
   public static void main(String[] args) {
-    ALS als = new ALS(3, 0.1);
+    ALS als = new ALS(4, 0.1);
     try {
       als.runAlsAlgorithm();
       //als.getTopTenRecommendedProductsForUser("A2JW67OY8U6HHK");
