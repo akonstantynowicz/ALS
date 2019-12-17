@@ -33,9 +33,9 @@ public class ALS {
 
   private final List<String> productNames;
 
-  private final int d;
+  private int d;
 
-  private final double lambda;
+  private double lambda;
 
   private Map<Key, pl.ug.edu.generic.Double> testValues;
 
@@ -50,6 +50,22 @@ public class ALS {
   public ALS(final int d, final double lambda) {
     this.d = d;
     this.lambda = lambda;
+    userList = new TreeMap<>();
+    userRatingsList = new ArrayList<>();
+    productNames = new ArrayList<>();
+    testValues = new HashMap<>();
+  }
+
+  public ALS(final double lambda) {
+    this.lambda = lambda;
+    userList = new TreeMap<>();
+    userRatingsList = new ArrayList<>();
+    productNames = new ArrayList<>();
+    testValues = new HashMap<>();
+  }
+
+  public ALS(final int d) {
+    this.d = d;
     userList = new TreeMap<>();
     userRatingsList = new ArrayList<>();
     productNames = new ArrayList<>();
@@ -89,7 +105,15 @@ public class ALS {
         .set(review.getProduct().getProductId(), review.getRating());
   }
 
-  private void alg() {
+  public void setD(int d) {
+    this.d = d;
+  }
+
+  public void setLambda(double lambda) {
+    this.lambda = lambda;
+  }
+
+  public void algorithm() {
     long startTime, endTime;
     double currentGoalFunction;
     double previousGoalFunction;
@@ -216,12 +240,17 @@ public class ALS {
    * @see IOException
    */
   public void runAlsAlgorithm() throws IOException {
-    List<Review> reviewList = Parser.parseFile("sample2.txt");
+    prepareInitialData();
+    algorithm();
+  }
+
+  public void prepareInitialData() throws IOException {
+    List<Review> reviewList = Parser.parseFile("src/amazon-meta.txt");
     //System.out.println(DataUtil.getHighestProductId(reviewList));
     setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
     generateUserRatingsFromReviewList(reviewList);
-    alg();
     generateProductNamesList(reviewList);
+    System.out.println("Data ready");
   }
 
   private void generateUserRatingsFromReviewList(List<Review> reviewList) {
