@@ -22,6 +22,8 @@ public class ALS {
 
     private final Map<String, Integer> userList;
 
+    private final Map<Integer, Integer> productsList;
+
     private final List<List<Integer>> userRatingsList;
 
     private final List<String> productNames;
@@ -42,6 +44,7 @@ public class ALS {
         this.d = d;
         this.lambda = lambda;
         userList = new TreeMap<>();
+        productsList = new TreeMap<>();
         userRatingsList = new ArrayList<>();
         productNames = new ArrayList<>();
     }
