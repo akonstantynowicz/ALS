@@ -23,7 +23,6 @@ public class Main {
    * @param args unused
    */
   public static void main(String[] args) {
-
     Double d = new Double(5);
     System.out.println(Double.doubleValue(d));
     ALS als = new ALS(4, 0.1);

@@ -20,8 +20,8 @@ public class Double implements Numeric<Double> {
     return new Double(d);
   }
 
-  public static double doubleValue(Double d) {
-    return d.number;
+  public double doubleValue() {
+    return this.number;
   }
 
   @Override
@@ -58,4 +58,5 @@ public class Double implements Numeric<Double> {
   public Boolean isGreaterThan(Double other) {
     return (this.number > other.number);
   }
+
 }
