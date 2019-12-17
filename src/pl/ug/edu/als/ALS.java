@@ -27,9 +27,11 @@ public class ALS {
 
   private static final int NUMBER_OF_ITERATIONS = 100;
 
+  private final List<List<Integer>> userRatingsList;
+
   private final Map<String, Integer> userList;
 
-  private final List<List<Integer>> userRatingsList;
+  private final Map<Integer, Integer> productsList;
 
   private final List<String> productNames;
 
@@ -47,13 +49,14 @@ public class ALS {
 
   private Matrix resultMatrix;
 
+
   public ALS(final int d, final double lambda) {
     this.d = d;
     this.lambda = lambda;
     userList = new TreeMap<>();
+    productsList = new TreeMap<>();
     userRatingsList = new ArrayList<>();
     productNames = new ArrayList<>();
-    testValues = new HashMap<>();
   }
 
   public ALS(final double lambda) {
@@ -71,7 +74,6 @@ public class ALS {
     productNames = new ArrayList<>();
     testValues = new HashMap<>();
   }
-
   private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
     final Gauss<Double> gauss = new Gauss<>(XU.M, XU.N);
     x.swapWithSolution(gauss.PG(XU.matrix, XU.vector), i);
