@@ -97,6 +97,7 @@ public class ALS {
         currentId++;
       }
     }
+
   }
 
   private void setProductsAmount(int productsAmount) {
@@ -126,7 +127,8 @@ public class ALS {
     double timeSum = 0.0;
     int neededIterations = 0;
     Matrix resultMatrix;
-    testValues = DataUtil.getTestData(userRatingsList);
+            testValues = DataUtil.getTestData(userRatingsList,reviewQuantity);
+
     //System.out.println("Result Matrix:");
     //System.out.println("error: " + DataUtil.checkTestData(resultMatrix, testValues));
     for (int attempt = 0; attempt < NUMBER_OF_ATTEMPTS; attempt++) {
@@ -207,8 +209,7 @@ public class ALS {
     int userIndex = 0;
     for (final List<Integer> userRatings : userRatingsList) {
       final ArrayList<Integer> ratedProductIds = (ArrayList<Integer>) DataUtil
-              .getRatedProductsIds(userRatings);
-
+          .getRatedProductsIds(userRatings);
       Matrix AU = calculateXU(ratedProductIds, p);
       AU.calculateVector(userRatings, ratedProductIds, p);
 
