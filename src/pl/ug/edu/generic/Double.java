@@ -20,6 +20,10 @@ public class Double implements Numeric<Double> {
     return new Double(d);
   }
 
+  public static double doubleValue(Double d) {
+    return d.number;
+  }
+
   @Override
   public Double add(Double other) {
     return Double.valueOf(this.number + other.number);
