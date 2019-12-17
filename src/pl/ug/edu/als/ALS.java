@@ -43,6 +43,8 @@ public class ALS {
 
   private int productsAmount;
 
+  private int reviewQuantity;
+
   private Matrix p;
 
   private Matrix u;
@@ -127,7 +129,7 @@ public class ALS {
     double timeSum = 0.0;
     int neededIterations = 0;
     Matrix resultMatrix;
-            testValues = DataUtil.getTestData(userRatingsList,reviewQuantity);
+            testValues = DataUtil.getTestData(userRatingsList, reviewQuantity);
 
     //System.out.println("Result Matrix:");
     //System.out.println("error: " + DataUtil.checkTestData(resultMatrix, testValues));
@@ -251,6 +253,7 @@ public class ALS {
 
   public void prepareInitialData() throws IOException {
     List<Review> reviewList = Parser.parseFile("sample2.txt");
+    reviewQuantity = reviewList.size();
     //System.out.println(DataUtil.getHighestProductId(reviewList));
     setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
     generateUserRatingsFromReviewList(reviewList);
