@@ -22,6 +22,21 @@ public final class DataUtil {
   }
 
   /**
+   * Get highest product id in the list of reviews.
+   * @param reviewList List of reviews.
+   * @return Highest product id in the list of reviews.
+   */
+  public static int getHighestProductId(Iterable<Review> reviewList) {
+    int highestId = 0;
+    for (Review review : reviewList) {
+      if (review.getProduct().getProductId() > highestId) {
+        highestId = review.getProduct().getProductId();
+      }
+    }
+    return highestId;
+  }
+
+  /**
    * Generates list containing id's of products in the userRatings.
    * @param userRatings List of user ratings.
    * @return List of product id's.
@@ -56,7 +71,7 @@ public final class DataUtil {
     return productRatings;
   }
 
-  public static Map<Key,pl.ug.edu.generic.Double> getTestData(List<List<Integer>> userRatingsList, Map<Integer, Integer> productsList){
+  public static Map<Key,pl.ug.edu.generic.Double> getTestData(List<List<Integer>> userRatingsList){
     Random generator = new Random();
     Map<Key,pl.ug.edu.generic.Double> testData = new HashMap<>();
     int counter=5;
@@ -64,8 +79,6 @@ public final class DataUtil {
     while(counter>0){
       int userId = generator.nextInt(userRatingsList.size());
       int productId = generator.nextInt(userRatingsList.get(0).size());
-      DataUtil.getRandomProductId(productsList);
-      System.out.println("product id: " + productId);
       testValue = Double.valueOf(userRatingsList.get(userId).get(productId));
       if (testValue.isGreaterThan(Double.valueOf(0))) {
         userRatingsList.get(userId).set(userRatingsList.get(userId).get(productId), 0);
@@ -74,14 +87,6 @@ public final class DataUtil {
       }
     }
     return testData;
-  }
-
-  public static int getRandomProductId(Map<Integer, Integer> productsList) {
-
-    for (int i: productsList.keySet()) {
-      System.out.println(productsList.get(i));
-    }
-    return 1;
   }
 
   public static Double checkTestData (Matrix result, Map<Key,Double> testData){

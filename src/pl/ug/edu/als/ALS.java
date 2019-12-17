@@ -76,7 +76,6 @@ public class ALS {
     productNames = new ArrayList<>();
     testValues = new HashMap<>();
   }
-
   private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
     final Gauss<Double> gauss = new Gauss<>(XU.M, XU.N);
     x.swapWithSolution(gauss.PG(XU.matrix, XU.vector), i);
@@ -104,6 +103,12 @@ public class ALS {
     this.productsAmount = productsAmount;
   }
 
+  private void addUserRating(final Review review) {
+    addUserIfNotInList(review.getUserId());
+    userRatingsList.get(userList.get(review.getUserId()))
+            .set(review.getProduct().getProductId(), review.getRating());
+  }
+
   public void setD(int d) {
     this.d = d;
   }
@@ -121,7 +126,7 @@ public class ALS {
     double timeSum = 0.0;
     int neededIterations = 0;
     Matrix resultMatrix;
-    testValues = DataUtil.getTestData(userRatingsList, productsList);
+    testValues = DataUtil.getTestData(userRatingsList);
     //System.out.println("Result Matrix:");
     //System.out.println("error: " + DataUtil.checkTestData(resultMatrix, testValues));
     for (int attempt = 0; attempt < NUMBER_OF_ATTEMPTS; attempt++) {
@@ -139,8 +144,8 @@ public class ALS {
           for (int m = 0; m < productsAmount; m++) {
             if (userRatingsList.get(n).get(m) != 0.0) {
               currentGoalFunction += Math.pow(
-                  userRatingsList.get(n).get(m) - resultMatrix.matrix[n][m].doubleValue(),
-                  2);
+                      userRatingsList.get(n).get(m) - resultMatrix.matrix[n][m].doubleValue(),
+                      2);
             }
           }
         }
@@ -169,10 +174,10 @@ public class ALS {
     System.out.println("\nd = " + d);
     System.out.println("lambda = " + lambda);
     System.out.println("Srednia ilosc iteracji do osiagniecia roznicy < 0.01: "
-        + neededIterations / NUMBER_OF_ATTEMPTS);
+            + neededIterations / NUMBER_OF_ATTEMPTS);
     System.out.println("Srednia funkcja celu: " + sumGoalFunction / NUMBER_OF_ATTEMPTS);
     System.out
-        .println("Sredni czas: " + (timeSum / NUMBER_OF_ATTEMPTS) / MILISECONDS_IN_SECOND + "s ");
+            .println("Sredni czas: " + (timeSum / NUMBER_OF_ATTEMPTS) / MILISECONDS_IN_SECOND + "s ");
   }
 
   private void calculatePAndUMatrixes() {
@@ -189,7 +194,7 @@ public class ALS {
     for (int i = 0; i < productsAmount; i++) {
       final List<Integer> ratingUsersIds = DataUtil.getRatingUserIds(userRatingsList, i);
       final List<Integer> productRatings = DataUtil
-          .getProductRatings(userRatingsList, i);
+              .getProductRatings(userRatingsList, i);
 
       final Matrix BU = calculateXU(ratingUsersIds, u);
       BU.calculateVector(productRatings, ratingUsersIds, u, i);
@@ -202,7 +207,7 @@ public class ALS {
     int userIndex = 0;
     for (final List<Integer> userRatings : userRatingsList) {
       final ArrayList<Integer> ratedProductIds = (ArrayList<Integer>) DataUtil
-          .getRatedProductsIds(userRatings);
+              .getRatedProductsIds(userRatings);
 
       Matrix AU = calculateXU(ratedProductIds, p);
       AU.calculateVector(userRatings, ratedProductIds, p);
@@ -246,16 +251,10 @@ public class ALS {
   public void prepareInitialData() throws IOException {
     List<Review> reviewList = Parser.parseFile("sample2.txt");
     //System.out.println(DataUtil.getHighestProductId(reviewList));
-    generateProductListFromReviewList(reviewList);
+    setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
     generateUserRatingsFromReviewList(reviewList);
     generateProductNamesList(reviewList);
     System.out.println("Data ready");
-  }
-
-  private void generateProductListFromReviewList(List<Review> reviewList) {
-    for (Review review :reviewList ) {
-      addProductIfNotInList(review.getProduct().getProductId());
-    }
   }
 
   private void generateUserRatingsFromReviewList(List<Review> reviewList) {
@@ -264,36 +263,6 @@ public class ALS {
       addUserRating(review);
     }
   }
-
-  private void addUserRating(final Review review) {
-    addUserIfNotInList(review.getUserId());
-    userRatingsList.get(userList.get(review.getUserId()))
-            .set(productsList.get(review.getProduct().getProductId()), review.getRating());
-  }
-
-  private void addProductIfNotInList(final int productId) {
-    if (!productsList.containsKey(productId)) {
-      System.out.println("adding new product, id: " + productId);
-      addProductToList(productId);
-    }
-  }
-
-  private void addUserIfNotInList(final String userId) {
-    if (!userList.containsKey(userId)) {
-      addUserToList(userId);
-    }
-  }
-
-  private void addProductToList(final int productId) {
-    int size = productsList.size();
-    productsList.put(productId, size);
-  }
-
-  private void addUserToList(final String userId) {
-    userList.put(userId, userRatingsList.size());
-    userRatingsList.add(new ArrayList<>(Collections.nCopies(productsList.size(), 0)));
-  }
-
 
   private void generateRandomPMatrix() {
     //System.out.println("Generuje P");
@@ -307,5 +276,16 @@ public class ALS {
     u = new Matrix(d, userList.size());
     u.generateRandomMatrix();
     //u.print();
+  }
+
+  private void addUserIfNotInList(final String userId) {
+    if (!userList.containsKey(userId)) {
+      addUserToList(userId);
+    }
+  }
+
+  private void addUserToList(final String userId) {
+    userList.put(userId, userRatingsList.size());
+    userRatingsList.add(new ArrayList<>(Collections.nCopies(productsAmount, 0)));
   }
 }
