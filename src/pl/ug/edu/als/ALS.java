@@ -35,9 +35,9 @@ public class ALS {
 
   private final List<String> productNames;
 
-  private final int d;
+  private int d;
 
-  private final double lambda;
+  private double lambda;
 
   private Map<Key, pl.ug.edu.generic.Double> testValues;
 
@@ -58,7 +58,24 @@ public class ALS {
     userRatingsList = new ArrayList<>();
     productNames = new ArrayList<>();
   }
-  
+
+  public ALS(final double lambda) {
+    productsList = new TreeMap<>();
+    this.lambda = lambda;
+    userList = new TreeMap<>();
+    userRatingsList = new ArrayList<>();
+    productNames = new ArrayList<>();
+    testValues = new HashMap<>();
+  }
+
+  public ALS(final int d) {
+    productsList = new TreeMap<>();
+    this.d = d;
+    userList = new TreeMap<>();
+    userRatingsList = new ArrayList<>();
+    productNames = new ArrayList<>();
+    testValues = new HashMap<>();
+  }
   private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
     final Gauss<Double> gauss = new Gauss<>(XU.M, XU.N);
     x.swapWithSolution(gauss.PG(XU.matrix, XU.vector), i);
@@ -93,7 +110,15 @@ public class ALS {
         .set(review.getProduct().getProductId(), review.getRating());
   }
 
-  private void alg() {
+  public void setD(int d) {
+    this.d = d;
+  }
+
+  public void setLambda(double lambda) {
+    this.lambda = lambda;
+  }
+
+  public void algorithm() {
     long startTime, endTime;
     double currentGoalFunction;
     double previousGoalFunction;
@@ -220,12 +245,17 @@ public class ALS {
    * @see IOException
    */
   public void runAlsAlgorithm() throws IOException {
+    prepareInitialData();
+    algorithm();
+  }
+
+  public void prepareInitialData() throws IOException {
     List<Review> reviewList = Parser.parseFile("sample2.txt");
     //System.out.println(DataUtil.getHighestProductId(reviewList));
     setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
     generateUserRatingsFromReviewList(reviewList);
-    alg();
     generateProductNamesList(reviewList);
+    System.out.println("Data ready");
   }
 
   private void generateUserRatingsFromReviewList(List<Review> reviewList) {

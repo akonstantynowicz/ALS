@@ -7,6 +7,7 @@ package pl.ug.edu;
 import java.io.IOException;
 import pl.ug.edu.als.ALS;
 import pl.ug.edu.generic.Double;
+import pl.ug.edu.als.Test;
 
 /**
  * <h1>ALS</h1>
@@ -27,9 +28,10 @@ public class Main {
     System.out.println(Double.doubleValue(d));
     ALS als = new ALS(4, 0.1);
     try {
-      als.runAlsAlgorithm();
+      //als.runAlsAlgorithm();
       //als.getTopTenRecommendedProductsForUser("A2JW67OY8U6HHK");
-      //Test.testTimeForDifferentD(1, 5, 0.2);
+      //Test.testForDifferentD(1, 5, 0.1);
+      Test.testForDifferentLambda(50, 0.1, 10);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

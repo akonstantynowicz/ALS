@@ -129,12 +129,12 @@ public final class Parser {
 
   private static List<Review> addFilteredReviews(List<Review> reviewList, List<Review> productReviewList, int minReviews) {
     if (productReviewList.size() > minReviews) {
-      System.out.println("adding " + productReviewList.get(0).getProduct().getProductId());
+      //System.out.println("adding " + productReviewList.get(0).getProduct().getProductId());
       reviewList.addAll(productReviewList);
       productReviewList = new ArrayList<Review>();
     }
     else if (productReviewList.size() != 0){
-      System.out.println("not adding " + productReviewList.get(0).getProduct().getProductId());
+      //System.out.println("not adding " + productReviewList.get(0).getProduct().getProductId());
       productReviewList = new ArrayList<Review>();
     }
     return productReviewList;

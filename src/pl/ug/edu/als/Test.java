@@ -12,11 +12,22 @@ public final class Test {
     throw new IllegalStateException("Utility Class");
   }
 
-  public static void testTimeForDifferentD(int minD, int maxD, double lambda) throws IOException {
-    ALS als;
+  public static void testForDifferentD(int minD, int maxD, double lambda) throws IOException {
+    ALS als = new ALS(lambda);
+    als.prepareInitialData();
     for (int i = minD; i <= maxD; i++) {
-      als = new ALS(i, lambda);
-      als.runAlsAlgorithm();
+      als.setD(i);
+      als.algorithm();
+    }
+  }
+
+  public static void testForDifferentLambda(int d, double minLambda, double maxLambda)
+      throws IOException {
+    ALS als = new ALS(d);
+    als.prepareInitialData();
+    for (double i = minLambda; i <= maxLambda; i += 0.1) {
+      als.setLambda(i);
+      als.algorithm();
     }
   }
 }
