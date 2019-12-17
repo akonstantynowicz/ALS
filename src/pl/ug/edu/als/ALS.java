@@ -60,6 +60,7 @@ public class ALS {
   }
 
   public ALS(final double lambda) {
+    productsList = new TreeMap<>();
     this.lambda = lambda;
     userList = new TreeMap<>();
     userRatingsList = new ArrayList<>();
@@ -68,6 +69,7 @@ public class ALS {
   }
 
   public ALS(final int d) {
+    productsList = new TreeMap<>();
     this.d = d;
     userList = new TreeMap<>();
     userRatingsList = new ArrayList<>();
@@ -247,7 +249,7 @@ public class ALS {
   }
 
   public void prepareInitialData() throws IOException {
-    List<Review> reviewList = Parser.parseFile("src/amazon-meta.txt");
+    List<Review> reviewList = Parser.parseFile("sample2.txt");
     //System.out.println(DataUtil.getHighestProductId(reviewList));
     setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
     generateUserRatingsFromReviewList(reviewList);
