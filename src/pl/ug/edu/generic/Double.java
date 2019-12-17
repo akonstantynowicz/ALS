@@ -20,6 +20,10 @@ public class Double implements Numeric<Double> {
     return new Double(d);
   }
 
+  public double doubleValue() {
+    return this.number;
+  }
+
   @Override
   public Double add(Double other) {
     return Double.valueOf(this.number + other.number);
@@ -54,4 +58,5 @@ public class Double implements Numeric<Double> {
   public Boolean isGreaterThan(Double other) {
     return (this.number > other.number);
   }
+
 }
