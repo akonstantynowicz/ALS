@@ -5,8 +5,8 @@
 package pl.ug.edu;
 
 import java.io.IOException;
-import pl.ug.edu.als.ALS;
 import pl.ug.edu.generic.Double;
+import pl.ug.edu.als.ALS;
 import pl.ug.edu.als.Test;
 
 /**
@@ -28,7 +28,7 @@ public class Main {
     System.out.println(Double.doubleValue(d));
     ALS als = new ALS(4, 0.1);
     try {
-      //als.runAlsAlgorithm();
+      als.runAlsAlgorithm();
       //als.getTopTenRecommendedProductsForUser("A2JW67OY8U6HHK");
       //Test.testForDifferentD(1, 5, 0.1);
       Test.testForDifferentLambda(50, 0.1, 10);

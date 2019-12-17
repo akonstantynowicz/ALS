@@ -107,7 +107,7 @@ public class ALS {
   private void addUserRating(final Review review) {
     addUserIfNotInList(review.getUserId());
     userRatingsList.get(userList.get(review.getUserId()))
-        .set(review.getProduct().getProductId(), review.getRating());
+            .set(review.getProduct().getProductId(), review.getRating());
   }
 
   public void setD(int d) {
@@ -146,8 +146,8 @@ public class ALS {
           for (int m = 0; m < productsAmount; m++) {
             if (userRatingsList.get(n).get(m) != 0.0) {
               currentGoalFunction += Math.pow(
-                  userRatingsList.get(n).get(m) - resultMatrix.matrix[n][m].doubleValue(),
-                  2);
+                      userRatingsList.get(n).get(m) - resultMatrix.matrix[n][m].doubleValue(),
+                      2);
             }
           }
         }
@@ -176,10 +176,10 @@ public class ALS {
     System.out.println("\nd = " + d);
     System.out.println("lambda = " + lambda);
     System.out.println("Srednia ilosc iteracji do osiagniecia roznicy < 0.01: "
-        + neededIterations / NUMBER_OF_ATTEMPTS);
+            + neededIterations / NUMBER_OF_ATTEMPTS);
     System.out.println("Srednia funkcja celu: " + sumGoalFunction / NUMBER_OF_ATTEMPTS);
     System.out
-        .println("Sredni czas: " + (timeSum / NUMBER_OF_ATTEMPTS) / MILISECONDS_IN_SECOND + "s ");
+            .println("Sredni czas: " + (timeSum / NUMBER_OF_ATTEMPTS) / MILISECONDS_IN_SECOND + "s ");
   }
 
   private void calculatePAndUMatrixes() {
@@ -196,7 +196,7 @@ public class ALS {
     for (int i = 0; i < productsAmount; i++) {
       final List<Integer> ratingUsersIds = DataUtil.getRatingUserIds(userRatingsList, i);
       final List<Integer> productRatings = DataUtil
-          .getProductRatings(userRatingsList, i);
+              .getProductRatings(userRatingsList, i);
 
       final Matrix BU = calculateXU(ratingUsersIds, u);
       BU.calculateVector(productRatings, ratingUsersIds, u, i);
