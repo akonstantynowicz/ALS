@@ -71,10 +71,10 @@ public final class DataUtil {
     return productRatings;
   }
 
-  public static Map<Key,pl.ug.edu.generic.Double> getTestData(List<List<Integer>> userRatingsList){
+  public static Map<Key,pl.ug.edu.generic.Double> getTestData(List<List<Integer>> userRatingsList,int reviewQuantity){
     Random generator = new Random();
     Map<Key,pl.ug.edu.generic.Double> testData = new HashMap<>();
-    int counter=5;
+    int counter=reviewQuantity/10;
     Double testValue;
     while(counter>0){
       int userId = generator.nextInt(userRatingsList.size());

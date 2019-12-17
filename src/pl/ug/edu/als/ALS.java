@@ -41,6 +41,8 @@ public class ALS {
 
     private Matrix resultMatrix;
 
+    private int reviewQuantity;
+
     public ALS(final int d, final double lambda) {
         this.d = d;
         this.lambda = lambda;
@@ -84,7 +86,7 @@ public class ALS {
     }
 
     private void alg() {
-        testValues = DataUtil.getTestData(userRatingsList);
+        testValues = DataUtil.getTestData(userRatingsList,reviewQuantity);
         calculatePAndUMatrixes();
         resultMatrix = generateResultMatrix();
         System.out.println("Result Matrix:");
@@ -160,6 +162,7 @@ public class ALS {
      */
     public void runAlsAlgorithm() throws IOException {
         List<Review> reviewList = Parser.parseFile("sample2.txt");
+        reviewQuantity=reviewList.size();
         //System.out.println(DataUtil.getHighestProductId(reviewList));
         setProductsAmount(DataUtil.getHighestProductId(reviewList) + 1);
         long startTime = System.currentTimeMillis();
