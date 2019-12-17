@@ -35,9 +35,12 @@ public class Matrix {
   }
 
   public void generateRandomMatrix() {
+    double max=0.4;
+    double min=0.1;
+    double range = max - min;
     for (int i = 0; i < M; i++) {
       for (int j = 0; j < N; j++) {
-        matrix[i][j] = Double.valueOf(Math.random());
+        matrix[i][j] = Double.valueOf((Math.random()*range) + min);
       }
     }
   }

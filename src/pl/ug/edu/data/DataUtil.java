@@ -94,11 +94,12 @@ public final class DataUtil {
     for (Map.Entry<Key,Double> value : testData.entrySet()){
       Key key = value.getKey();
       temp = result.matrix[key.getX()][key.getY()];
-      if(temp.isGreaterThan(Double.valueOf(5))){
+      /*if(temp.isGreaterThan(Double.valueOf(5))){
         temp = Double.valueOf(5);
-      }else if(Double.valueOf(1).isGreaterThan(temp)){
-        temp = Double.valueOf(1);
       }
+      else if(Double.valueOf(1).isGreaterThan(temp)){
+        temp = Double.valueOf(1);
+      }*/
 
       System.out.println("Hidden value = " + value.getValue() + " =? Counted value = " + temp);
       sum = sum.add((temp.subtract(value.getValue())).abs());
