@@ -25,7 +25,7 @@ public final class Test {
       throws IOException {
     ALS als = new ALS(d);
     als.prepareInitialData();
-    for (double i = minLambda; i <= maxLambda; i += 0.1) {
+    for (double i = minLambda; i <= maxLambda; i += 0.05) {
       als.setLambda(i);
       als.algorithm();
     }

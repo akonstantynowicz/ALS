@@ -5,8 +5,6 @@ package pl.ug.edu.gauss;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import pl.ug.edu.generic.Double;
 
 public class Matrix {
 
@@ -14,9 +12,9 @@ public class Matrix {
 
   public int N;
 
-  public Double[][] matrix;
+  public double[][] matrix;
 
-  public Double[] vector;
+  public double[] vector;
 
   public void print() {
     for (int i = 0; i < M; i++) {
@@ -30,8 +28,8 @@ public class Matrix {
   public Matrix(int M, int N) {
     this.M = M;
     this.N = N;
-    matrix = new Double[M][N];
-    vector = new Double[M];
+    matrix = new double[M][N];
+    vector = new double[M];
   }
 
   public void generateRandomMatrix() {
@@ -40,7 +38,7 @@ public class Matrix {
     double range = max - min;
     for (int i = 0; i < M; i++) {
       for (int j = 0; j < N; j++) {
-        matrix[i][j] = Double.valueOf((Math.random()*range) + min);
+        matrix[i][j] = (Math.random() * range) + min;
       }
     }
   }
@@ -49,9 +47,9 @@ public class Matrix {
     for (int i = 0; i < M; i++) {
       for (int j = 0; j < N; j++) {
         if (i == j) {
-          matrix[i][j] = Double.valueOf(1);
+          matrix[i][j] = 1d;
         } else {
-          matrix[i][j] = Double.valueOf(0);
+          matrix[i][j] = 0;
         }
       }
     }
@@ -59,19 +57,18 @@ public class Matrix {
 
   public void calculateVector(List<Integer> userRatings, ArrayList<Integer> ratedProductIds, Matrix P){
     for (int i=0;i<M;i++){
-      vector[i]=Double.valueOf(0);
+      vector[i]= 0;
       for (int id : ratedProductIds) {
-        vector[i] = vector[i].add(Double.valueOf(userRatings.get(id)).multiply(P.matrix[i][id]));
+        vector[i] += Double.valueOf(userRatings.get(id))*P.matrix[i][id];
       }
     }
   }
 
-  public void calculateVector(List<Integer> productRatings, List<Integer> raitingUsersIds, Matrix U,
-                              int p) {
+  public void calculateVector(List<Integer> productRatings, List<Integer> raitingUsersIds, Matrix U, int p) {
     for (int i=0;i<M;i++){
-      vector[i]=Double.valueOf(0);
+      vector[i]= 0;
       for (int id : raitingUsersIds) {
-        vector[i] = vector[i].add(Double.valueOf(productRatings.get(id)).multiply(U.matrix[i][id]));
+        vector[i] += Double.valueOf(productRatings.get(id))*U.matrix[i][id];
       }
     }
   }
@@ -91,9 +88,9 @@ public class Matrix {
     Matrix product = new Matrix(this.M,m.N);
     for (int i=0;i<product.M;i++){
       for(int j=0;j<product.N;j++){
-        product.matrix[i][j]=Double.valueOf(0);
+        product.matrix[i][j]= 0;
         for (int k=0;k<m.M;k++){
-          product.matrix[i][j] = product.matrix[i][j].add(this.matrix[i][k].multiply(m.matrix[k][j]));
+          product.matrix[i][j] += this.matrix[i][k]*m.matrix[k][j];
         }
       }
     }
@@ -103,7 +100,7 @@ public class Matrix {
   public void multiply(Double number){
     for (int i=0;i<this.M;i++){
       for (int j=0;j<this.N;j++){
-        this.matrix[i][j] = this.matrix[i][j].multiply(number);
+        this.matrix[i][j] = this.matrix[i][j]*number;
       }
     }
   }
@@ -112,13 +109,13 @@ public class Matrix {
     Matrix sum = new Matrix(this.M,this.N);
     for(int i=0;i<sum.M;i++){
       for (int j=0;j<sum.N;j++){
-        sum.matrix[i][j] = this.matrix[i][j].add(m.matrix[i][j]);
+        sum.matrix[i][j] = this.matrix[i][j]+m.matrix[i][j];
       }
     }
     return sum;
   }
 
-  public void swapWithSolution(List<Double> solution, int columnIndex){
+  public void swapWithSolution(List<java.lang.Double> solution, int columnIndex){
     for(int i=0;i<M;i++){
       matrix[i][columnIndex]=solution.get(i);
     }

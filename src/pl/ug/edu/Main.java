@@ -5,7 +5,6 @@
 package pl.ug.edu;
 
 import java.io.IOException;
-import pl.ug.edu.generic.Double;
 import pl.ug.edu.als.ALS;
 import pl.ug.edu.als.Test;
 
@@ -24,12 +23,12 @@ public class Main {
    * @param args unused
    */
   public static void main(String[] args) {
-    ALS als = new ALS(4, 0.1);
+    ALS als = new ALS(5, 0.5);
     try {
       als.runAlsAlgorithm();
       //als.getTopTenRecommendedProductsForUser("A2JW67OY8U6HHK");
       //Test.testForDifferentD(1, 5, 0.1);
-      Test.testForDifferentLambda(50, 0.1, 10);
+      Test.testForDifferentLambda(5, 0.0, 0.2);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

@@ -5,7 +5,6 @@
 package pl.ug.edu.data;
 
 import pl.ug.edu.gauss.Matrix;
-import pl.ug.edu.generic.Double;
 
 import java.util.*;
 
@@ -71,16 +70,16 @@ public final class DataUtil {
     return productRatings;
   }
 
-  public static Map<Key,pl.ug.edu.generic.Double> getTestData(List<List<Integer>> userRatingsList,int reviewQuantity){
+  public static Map<Key,Double> getTestData(List<List<Integer>> userRatingsList, int reviewQuantity){
     Random generator = new Random();
-    Map<Key,pl.ug.edu.generic.Double> testData = new HashMap<>();
+    Map<Key,Double> testData = new HashMap<>();
     int counter=reviewQuantity/10;
-    Double testValue;
+    double testValue;
     while(counter>0){
       int userId = generator.nextInt(userRatingsList.size());
       int productId = generator.nextInt(userRatingsList.get(0).size());
-      testValue = Double.valueOf(userRatingsList.get(userId).get(productId));
-      if (testValue.isGreaterThan(Double.valueOf(0))) {
+      testValue = userRatingsList.get(userId).get(productId);
+      if (testValue>0) {
         userRatingsList.get(userId).set(userRatingsList.get(userId).get(productId), 0);
         testData.put(new Key(userId, productId), testValue);
         counter--;
@@ -90,19 +89,18 @@ public final class DataUtil {
   }
 
   public static Double checkTestData (Matrix result, Map<Key,Double> testData){
-    Double temp,sum = Double.valueOf(0);
+    double temp,sum = 0;
     for (Map.Entry<Key,Double> value : testData.entrySet()){
       Key key = value.getKey();
       temp = result.matrix[key.getX()][key.getY()];
-      /*if(temp.isGreaterThan(Double.valueOf(5))){
-        temp = Double.valueOf(5);
+      /*if(temp>5){
+        temp = 5;
       }
-      else if(Double.valueOf(1).isGreaterThan(temp)){
-        temp = Double.valueOf(1);
+      else if(temp<1){
+        temp = 1;
       }*/
-
       System.out.println("Hidden value = " + value.getValue() + " =? Counted value = " + temp);
-      sum = sum.add((temp.subtract(value.getValue())).abs());
+      sum = sum + Math.abs(temp-value.getValue());
     }
     return sum;
   }

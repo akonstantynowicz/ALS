@@ -17,7 +17,6 @@ import pl.ug.edu.data.Parser;
 import pl.ug.edu.data.Review;
 import pl.ug.edu.gauss.Gauss;
 import pl.ug.edu.gauss.Matrix;
-import pl.ug.edu.generic.Double;
 
 public class ALS {
 
@@ -39,7 +38,7 @@ public class ALS {
 
   private double lambda;
 
-  private Map<Key, pl.ug.edu.generic.Double> testValues;
+  private Map<Key,Double> testValues;
 
   private int productsAmount;
 
@@ -79,7 +78,7 @@ public class ALS {
     testValues = new HashMap<>();
   }
   private static void calculateColumnValues(final int i, final Matrix XU, final Matrix x) {
-    final Gauss<Double> gauss = new Gauss<>(XU.M, XU.N);
+    final Gauss gauss = new Gauss(XU.M, XU.N);
     x.swapWithSolution(gauss.PG(XU.matrix, XU.vector), i);
   }
 
@@ -148,7 +147,7 @@ public class ALS {
           for (int m = 0; m < productsAmount; m++) {
             if (userRatingsList.get(n).get(m) != 0.0) {
               currentGoalFunction += Math.pow(
-                      userRatingsList.get(n).get(m) - resultMatrix.matrix[n][m].doubleValue(),
+                      userRatingsList.get(n).get(m) - resultMatrix.matrix[n][m],
                       2);
             }
           }
@@ -156,12 +155,12 @@ public class ALS {
         double reg = 0.0;
         for (int n = 0; n < d; n++) {
           for (int m = 0; m < userList.size(); m++) {
-            reg += Math.pow(u.matrix[n][m].doubleValue(), 2);
+            reg += Math.pow(u.matrix[n][m], 2);
           }
         }
         for (int n = 0; n < d; n++) {
           for (int m = 0; m < productsAmount; m++) {
-            reg += Math.pow(p.matrix[n][m].doubleValue(), 2);
+            reg += Math.pow(p.matrix[n][m], 2);
           }
           if (goalFunctionDifference < 0.01) {
             neededIterations = i;
@@ -226,7 +225,7 @@ public class ALS {
     final Matrix XIxT = XIx.transpose();
     final Matrix E = new Matrix(d, d);
     E.generateUnitMatrix();
-    E.multiply(Double.valueOf(lambda));
+    E.multiply(lambda);
 
     return XIx.multiply(XIxT).add(E);
   }
