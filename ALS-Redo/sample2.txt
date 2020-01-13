@@ -86,7 +86,6 @@ ASIN: 0486220125
   reviews: total: 17  downloaded: 17  avg rating: 4
     1997-7-4  cutomer:  ATVPDKIKX0DER  rating: 5  votes:  12  helpful:  11
     1998-10-11  cutomer:  AUEZ7NVOEHYRY  rating: 5  votes:  13  helpful:  12
-    1999-4-15  cutomer:  ATVPDKIKX0DER  rating: 5  votes:  18  helpful:   7
     2000-1-4  cutomer:  AJYG6ZJUQPZ9M  rating: 4  votes:  14  helpful:  10
     2000-2-8  cutomer: A2ESGJTTLJWIAK  rating: 5  votes:  17  helpful:  11
     2000-4-28  cutomer: A2CHULHAO3A9BY  rating: 5  votes:  23  helpful:  16
@@ -96,6 +95,8 @@ ASIN: 0486220125
     2002-12-4  cutomer: A393PYR83LT7R8  rating: 1  votes:   8  helpful:   8
     2003-4-21  cutomer:  AVY10FEFM6OBC  rating: 4  votes:   7  helpful:   1
     2003-7-24  cutomer: A2OSPW11FVXTU6  rating: 4  votes:   3  helpful:   2
+	2003-7-24  cutomer: A2OSPW11FVXTU6  rating: 4  votes:   3  helpful:   2
+	2003-7-24  cutomer: A2OSPW11FVXTU6  rating: 4  votes:   3  helpful:   2
     2003-10-10  cutomer: A32Z5HQGTG5V49  rating: 4  votes:   7  helpful:   4
     2003-10-21  cutomer: A2WSI8HOWHFDOT  rating: 5  votes:  27  helpful:  25
     2003-10-26  cutomer: A3BGC9MSXGM0WH  rating: 4  votes:  13  helpful:  10
@@ -129,6 +130,7 @@ ASIN: 0231118597
    |Books[283155]|Subjects[1000]|Nonfiction[53]|Politics[11079]|General[11083]
    |Books[283155]|Subjects[1000]|Nonfiction[53]|Politics[11079]|U.S.[11117]
   reviews: total: 15  downloaded: 15  avg rating: 4.5
+	2004-5-1  cutomer: A30JTDN020MAJB  rating: 4  votes:   4  helpful:   4
     2000-10-31  cutomer: A2F1X6YFCJZ1FH  rating: 5  votes:  10  helpful:   9
     2000-11-1  cutomer: A1OZQCZAK21S6M  rating: 5  votes:  13  helpful:  12
     2000-11-19  cutomer:  AL5D52NA8F67F  rating: 5  votes:  16  helpful:  13
@@ -136,6 +138,7 @@ ASIN: 0231118597
     2001-5-10  cutomer: A3I6SOXDIE0M8R  rating: 5  votes:   6  helpful:   6
     2001-7-1  cutomer: A3559TE3F9RRNL  rating: 5  votes:   5  helpful:   5
     2001-8-25  cutomer:  ASPUU0H77LFXG  rating: 5  votes:   3  helpful:   3
+	2003-7-24  cutomer: A2OSPW11FVXTU6  rating: 4  votes:   3  helpful:   2
     2001-9-13  cutomer: A3L902U49A6X5K  rating: 5  votes:   6  helpful:   6
     2001-10-25  cutomer:  AL5OEDM8TPTKV  rating: 5  votes:  10  helpful:  10
     2001-11-3  cutomer: A1R64WON03GTN4  rating: 5  votes:   1  helpful:   1
@@ -166,6 +169,7 @@ ASIN: 0375709363
    |Books[283155]|Subjects[1000]|Nonfiction[53]|Politics[11079]|History & Theory[11086]
    |Books[283155]|Subjects[1000]|Nonfiction[53]|Social Sciences[11232]|Anthropology[11233]|Cultural[11235]
   reviews: total: 6  downloaded: 6  avg rating: 4
+  	2003-7-24  cutomer: A2OSPW11FVXTU6  rating: 4  votes:   3  helpful:   2
     2000-10-8  cutomer: A2RI73IFW2GWU1  rating: 4  votes:  12  helpful:   7
     2001-5-4  cutomer: A1GE54WF2WUZ2X  rating: 5  votes:  11  helpful:   8
     2001-8-27  cutomer: A36S399V1VC4DR  rating: 4  votes:   5  helpful:   3

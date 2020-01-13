@@ -71,7 +71,7 @@ public class Gauss {
       }
       wynik[i] = B[i] / A[i][i];
     }
-    List<Double> result = new ArrayList<>();
+    List<Double> result = new ArrayList<Double>();
     for(int i=0; i<M;i++){
       result.add(wynik[i]);
     }
